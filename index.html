@@ -32,6 +32,38 @@
       <pre id="output"></pre>
     </main>
 
+    
+<!-- webcam here -->
+<select onchange='start(this.value)'>
+<option>select source</option>
+</select>
+<select id='res'>
+<option>VGA</option>
+<option>HD</option>
+</select>
+<div id="container">
+    <video autoplay="true" id="videoElement"></video>
+    <a target="show" id="log"><canvas id="canvas"></canvas></a>
+</div>
+<span style='background:grey'>
+capture: <input type="number" name="update" min="1" value="600" size="3" title="interval">s File: <input type="text" name="fname" value="out" title="(path+)name">.
+<select name="ft"><option>png</option><option selected>jpeg</option></select> 
+<button onclick='if(this.textContent=="start") {this.textContent="stop";capture()} else {this.textContent="start";clearTimeout(t)}'>start</button>
+<select name="effect">
+  <option>&nbsp;none</option>
+  <option>&#x25D0;gray</option>
+  <option>&#x21F1;zoom</option>
+  <option>&#x21B7;rotate</option>
+  <option>&#x21E4;crop</option>
+  <option>&#x21E2;motion</option>
+</select> 
+<!-- grayscale:<input type="checkbox" id="bw">  -->
+ Overlay: <input type="text" name="overlay" value="%D" title="%d = date">
+ motion<input type="checkbox" id="md" onclick='if(this.checked) document.getElementsByName("update")[0].value=1' title="detection">
+&frac12;<input type="checkbox" id="sz" title="size">
+</span>
+    
+    
     <script src="webapp.bundle.js"></script>
 
     <script>
