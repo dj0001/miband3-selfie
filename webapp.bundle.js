@@ -7836,6 +7836,7 @@ var changed=1, n=1, own="", t
         fd.append('file', blob, fn+"."+ft);  // Initiate a multipart/form-data upload
 
         //if (changed) xhr.send(fd);  //
+        link.href=URL.createObjectURL(blob)
     }
     ,'image/'+ft  //jpeg
 );
