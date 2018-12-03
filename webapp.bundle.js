@@ -7590,7 +7590,7 @@
               _handleNotify(event) {
                 const value = Buffer.from(event.target.value.buffer);
                           
-                alert(value.toString('hex'))  //dj
+               // alert(value.toString('hex'))  //dj
                 if (value.toString('hex') == '08') alert('shot')  //dj device search //alert(value.toString('hex'))  //09
                           
                 if (event.target.uuid === this.char.auth.uuid) {
