@@ -7668,15 +7668,15 @@
               await miband.showNotification('phone');
               await delay(5000);
               await miband.showNotification('off');
-
+*/
               log('Tap MiBand button, quick!');
               miband.on('button', () => log('Tap detected'));
               try {
-                await miband.waitButton(10000);
+                await miband.waitButton(30000);  //10000
               } catch (e) {
                 log('OK, nevermind ;)');
               }
-
+/*
               log('Heart Rate Monitor (single-shot)');
               log('Result:', await miband.hrmRead());
 
@@ -7687,12 +7687,12 @@
               await miband.hrmStart();
               await delay(30000);
               await miband.hrmStop();
-*/
-              log('RAW data (no decoding)...')  //
-              miband.rawStart();
-              await delay(30000);
-              miband.rawStop();
 
+              //log('RAW data (no decoding)...')  //
+              //miband.rawStart();
+              //await delay(30000);
+              //miband.rawStop();
+*/
               log('Finished.');
             }
 
