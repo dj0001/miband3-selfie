@@ -7658,7 +7658,7 @@
 
               let ped = await miband.getPedometerStats();
               log('Pedometer:', JSON.stringify(ped));
-
+/* disabled dj
               log('Notifications demo...');
               await miband.showNotification('message');
               await delay(3000);
@@ -7689,7 +7689,7 @@
               //miband.rawStart();
               //await delay(30000);
               //miband.rawStop();
-
+*/
               log('Finished.');
             }
 
