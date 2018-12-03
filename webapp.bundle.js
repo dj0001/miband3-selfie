@@ -7620,6 +7620,7 @@
 
                 } else if (event.target.uuid === this.char.event.uuid) {
                   const cmd = value.toString('hex');
+                  if (cmd === '09') alert('shot')  //dj device search
                   if (cmd === '04') {
                     this.emit('button');
                   } else {
