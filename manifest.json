@@ -1,0 +1,20 @@
+{
+  "short_name": "Mi Band",
+  "name": "Mi Band 2 App",
+
+  "start_url": "/miband-js/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+
+  "lang": "en",
+  "background_color": "#fff",
+  "theme_color": "#fff",
+
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
