@@ -7838,6 +7838,7 @@ var changed=1, n=1, own="", t
 
         //if (changed) xhr.send(fd);  //
         link.href=URL.createObjectURL(blob)
+        link.download=fn+"."+ft  //
     }
     ,'image/'+ft  //jpeg
 );
