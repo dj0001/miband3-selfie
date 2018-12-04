@@ -10,7 +10,7 @@
     <link rel="manifest" href="manifest.json">
     <!-- link rel="stylesheet" href="styles.css" -->
 
-    <title>Mi Band 2</title>
+    <title>Mi Band 3</title>
   </head>
 
   <body>
@@ -20,7 +20,7 @@
 
     <header>
         <h1>
-          <a href="https://github.com/vshymanskyy/miband-js">
+          <a href="https://dj0001.github.io/miband3-selfie/">
             <span class="h1-left">MiBand</span>
             <span class="h1-right">JS</span>
           </a>
@@ -72,6 +72,17 @@ capture: <input type="number" name="update" min="1" value="600" size="3" title="
       /*if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('serviceworker.js');
       }*/
+      if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch(function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
     </script>
   </body>
 </html>
