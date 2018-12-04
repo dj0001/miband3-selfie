@@ -7866,7 +7866,7 @@ document.querySelector("select").add(option);
 function start(constr) {
 if (video.srcObject) video.srcObject.getVideoTracks()[0].stop()
 constr = navigator.webkitGetUserMedia? {mandatory:{sourceId: constr}} : {deviceId: {exact: constr}}
-if(document.getElementById("res").value=="HD") {constr.width={ideal: 1280}; constr.height={ideal: 720}}
+if(document.getElementById("res").value=="HD") constr={width:{ideal: 1280},height:{ideal: 720}}  //{constr.width={ideal: 1280}; constr.height={ideal: 720}}
   if (!navigator.mediaDevices.getUserMedia) {  //chrome51
 navigator.webkitGetUserMedia({video: constr}, function(stream){video.src = URL.createObjectURL(stream)}, function(e){console.log(e)})
   } else
