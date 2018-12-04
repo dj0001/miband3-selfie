@@ -7754,6 +7754,7 @@ var res=""
 var w, ofont="12px Arial", ocolor="rgba(255,255,255,0.8)", Z=1.41, K=0.866  //edit here w=640 ;"webcam.htm?5" runs 5 minutes
 var img = new Image(); //img.src = "overlay.png"  //your overlay image
 var oimg = new Image(); //oimg.src = "offline.jpg"  //your offline image
+var wo  //fixed second shot
 
 var tstop = new Date(new Date().getTime() + location.search.slice(1)*60*1000); document.querySelector('button').title=(location.search)?tstop:"upload"
 var changed=1, n=1, own="", t
@@ -7769,7 +7770,7 @@ var changed=1, n=1, own="", t
       var e=document.getElementsByName("effect")[0].selectedIndex;
       var ft=ftg.options[ftg.selectedIndex].text  //
       var k = (e==4)?K:1
-      if (!w) {w=video.videoWidth; var wo=w}; w=((document.getElementById("sz").checked)?0.5:1)*wo
+      if (!w) {w=video.videoWidth; wo=w}; w=((document.getElementById("sz").checked)?0.5:1)*wo
       h=video.videoHeight/video.videoWidth*w;  //aspect  if (video.videoHeight)
       canvas.width=(e==3)?h:w; canvas.height=(e==3)?w:h*k;
       
