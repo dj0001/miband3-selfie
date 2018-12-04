@@ -2,7 +2,7 @@
   "short_name": "Mi Band",
   "name": "Mi Band 2 App",
 
-  "start_url": "/miband-js/index.html",
+  "start_url": ".",
   "display": "standalone",
   "orientation": "portrait",
 
