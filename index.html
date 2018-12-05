@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="Description" content="take photo with miband3">
 
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="manifest" href="manifest.json">
@@ -33,7 +34,7 @@
     </main>
 
     
-<!-- webcam here -->
+<aside>  <!-- webcam here -->
 <select onchange='start(this.value)'>
 <option>select source</option>
 </select>
@@ -63,6 +64,7 @@ capture: <input type="number" name="update" min="1" value="600" size="3" title="
 &frac12;<input type="checkbox" id="sz" title="size">
 <a id='link' download='mypic.jpg'>download</a>
 </span>
+</aside>
     
     
     <script src="webapp.bundle.js"></script>
