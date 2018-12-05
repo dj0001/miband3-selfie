@@ -7673,9 +7673,10 @@
               log('Tap MiBand button, quick!');
               miband.on('button', () => log('Tap detected'));
               try {
-                await miband.waitButton(30000);  //10000
+                await miband.waitButton(10000);  //30000
               } catch (e) {
                 log('OK, nevermind ;)');
+                log('Tap devicesearch');
               }
 /*
               log('Heart Rate Monitor (single-shot)');
