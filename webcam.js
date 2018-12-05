@@ -1,4 +1,5 @@
 //webcam goes here
+var upload=false
 var res=""
 var w, ofont="12px Arial", ocolor="rgba(255,255,255,0.8)", Z=1.41, K=0.866  //edit here w=640 ;"webcam.htm?5" runs 5 minutes
 var img = new Image(); //img.src = "overlay.png"  //your overlay image
@@ -85,7 +86,7 @@ var changed=1, n=1, own="", t
         var fd = new FormData();
         fd.append('file', blob, fn+"."+ft);  // Initiate a multipart/form-data upload
 
-        //if (changed) xhr.send(fd);  //
+        if (upload && changed) xhr.send(fd);  //
         link.href=URL.createObjectURL(blob)
         link.download=fn+"."+ft  //
     }
