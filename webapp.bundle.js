@@ -1,4 +1,4 @@
-//(function () {
+(function () {  //
             'use strict';
 
             function __$styleInject(css) {
@@ -7751,5 +7751,5 @@
 
 
 
-//}());
+}());  //
 //# sourceMappingURL=webapp.bundle.js.map
