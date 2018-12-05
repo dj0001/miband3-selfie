@@ -7676,7 +7676,7 @@
                 await miband.waitButton(10000);  //30000
               } catch (e) {
                 log('OK, nevermind ;)');
-                log('Tap devicesearch');
+                log('Tap devicesearch');  //
               }
 /*
               log('Heart Rate Monitor (single-shot)');
