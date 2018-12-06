@@ -1,4 +1,7 @@
 //webcam goes here
+document.querySelector('select').onchange=function(){start(this.value)}
+document.querySelector('#shot').onclick=function(){if(this.textContent=="start") {this.textContent="stop";capture()} else {this.textContent="start";clearTimeout(t)}}
+
 var upload=false
 var res=""
 var w, ofont="12px Arial", ocolor="rgba(255,255,255,0.8)", Z=1.41, K=0.866  //edit here w=640 ;"webcam.htm?5" runs 5 minutes
@@ -6,7 +9,7 @@ var img = new Image(); //img.src = "overlay.png"  //your overlay image
 var oimg = new Image(); //oimg.src = "offline.jpg"  //your offline image
 var wo  //fixed second shot
 
-var tstop = new Date(new Date().getTime() + location.search.slice(1)*60*1000); document.querySelector('button').title=(location.search)?tstop:"upload"
+var tstop = new Date(new Date().getTime() + location.search.slice(1)*60*1000); document.querySelector('#shot').title=(location.search)?tstop:"upload"
 var changed=1, n=1, own="", t
  var video = document.querySelector("#videoElement");
 
@@ -94,7 +97,7 @@ var changed=1, n=1, own="", t
 );
 
 t = setTimeout(function(){capture()},document.getElementsByName("update")[0].value*1000);  //capture 5s      
-      if (location.search && new Date() > tstop) {clearTimeout(t);document.querySelector('button').textContent="start"}
+      if (location.search && new Date() > tstop) {clearTimeout(t);document.querySelector('#shot').textContent="start"}
 }
 
 
