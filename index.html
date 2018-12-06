@@ -35,7 +35,7 @@
 
     
 <aside>  <!-- webcam here -->
-<select onchange='start(this.value)'>
+<select >
 <option>select source</option>
 </select>
 <select id='res'>
@@ -49,7 +49,7 @@
 <span style='background:grey'>
 capture: <input type="number" name="update" min="1" value="600" size="3" title="interval">s File: <input type="text" name="fname" value="out" title="(path+)name">.
 <select name="ft"><option>png</option><option selected>jpeg</option></select> 
-<button onclick='if(this.textContent=="start") {this.textContent="stop";capture()} else {this.textContent="start";clearTimeout(t)}'>start</button>
+<button id="shot">start</button>
 <select name="effect">
   <option>&nbsp;none</option>
   <option>&#x25D0;gray</option>
