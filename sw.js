@@ -1,6 +1,6 @@
 'use strict';
 
-const version = 'v1.01';
+const version = 'v1.02';
 const staticCachePrefix = 'miband3-pd1-static-';
 const staticCacheName = staticCachePrefix + version;
 
