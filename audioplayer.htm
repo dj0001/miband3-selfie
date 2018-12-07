@@ -1,0 +1,36 @@
+<html>
+<body>
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+
+<header><button id="scanBtn" class="btn-scan">Scan</button></header>
+<main style="display: none;"><pre id="output"></pre></main>
+
+
+<input type="file" id="file-upload" accept="audio/*" multiple />  <!-- style='background:grey' -->
+<button id="shot">&#x25BA;</button>
+
+
+<script>
+var audio=new Audio(), filesArray, i=0
+
+document.getElementById('file-upload').onchange = function(e) {
+filesArray = this.files;  //var 
+//console.log(filesArray)
+
+i--;audio.onended()
+but.textContent="\u2759\u2759"
+}
+
+
+var but=document.querySelector('#shot')
+but.onclick=function(){if(audio.paused) {audio.play();this.textContent="\u2759\u2759"} else {audio.pause();this.textContent="\u25BA"}}
+but.oncontextmenu = function(e) {e.preventDefault(); audio.onended()}  //rightclick  //
+
+audio.onended = function() {i++; audio.src=URL.createObjectURL(filesArray[i]);audio.play();document.title=filesArray[i].name}
+
+</script>
+
+<script src="webapp.bundle.js"></script>
+
+</body>
+</html>
