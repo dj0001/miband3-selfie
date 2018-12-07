@@ -7591,7 +7591,7 @@
                 const value = Buffer.from(event.target.value.buffer);
                           
                // alert(value.toString('hex'))  //dj
-                if (value.toString('hex') == '08') {console.log('shot');clearTimeout(t);capture()}  //dj device search //alert(value.toString('hex'))  //09
+                if (value.toString('hex') == '08') {document.querySelector('#shot').click()}  //dj device search //console.log('shot');clearTimeout(t);capture()
                           
                 if (event.target.uuid === this.char.auth.uuid) {
                   const cmd = value.slice(0,3).toString('hex');
