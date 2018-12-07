@@ -1,0 +1,37 @@
+<html>
+<body>
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+
+<header><button id="scanBtn" class="btn-scan">Scan</button></header>
+<main style="display: none;"><pre id="output"></pre></main>
+
+
+
+<button id="shot">change light</button>
+
+
+<script>
+var bridge="http://localhost:8000/api/newdeveloper"  //edit here
+var path="lights/1/state"  //edit here
+var state=true //bd={on:true}
+
+var but=document.querySelector('#shot')
+
+but.onclick=function(){
+state=!state
+bd={on:state}
+
+var xhr = new XMLHttpRequest();
+xhr.open("PUT", bridge+"/"+path)
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.onload = function() {console.log(xhr.responseText);}
+xhr.onerror = function(e) {console.log(e.type)}  //
+xhr.send(JSON.stringify(bd))
+}
+
+</script>
+
+<script src="webapp.bundle.js"></script>
+
+</body>
+</html>
