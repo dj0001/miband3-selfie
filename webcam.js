@@ -1,6 +1,7 @@
 //webcam goes here
 document.querySelector('select').onchange=function(){start(this.value)}
-document.querySelector('#shot').onclick=function(){if(this.textContent=="start") {this.textContent="stop";capture()} else {this.textContent="start";clearTimeout(t)}}
+document.querySelector('#shot').oncontextmenu=function(){e.preventDefault();if(this.textContent=="start") {this.textContent="stop";capture()} else {this.textContent="start";clearTimeout(t)}}
+document.querySelector('#shot').onclick=function(){console.log('shot');clearTimeout(t);capture()}
 
 var upload=false
 var res=""
