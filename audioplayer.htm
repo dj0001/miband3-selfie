@@ -35,8 +35,11 @@ audio.onended = function() {i++;
 
 function playpause() {if(audio.paused) {audio.play();but.textContent="\u2759\u2759"} else {audio.pause();but.textContent="\u25BA"}}
 function nexttrack() {audio.onended()}
-function m3u() {fetch(filesArray[i].name).then(function(response) {response.text()
- .then(function(text){console.log(text);var tmp=text.match(/^(?!#)(?!\s).*$/mg).map(encodeURI);console.log(tmp); audio.src=tmp[0];audio.play()})})}
+function m3u() {
+ var reader = new FileReader()
+ reader.onload = function(){var tmp=reader.result.match(/^(?!#)(?!\s).*$/mg).map(encodeURI); audio.src=tmp[0];audio.play()}
+ reader.readAsText(filesArray[i])
+ }
 </script>
 
 <script src="webapp.bundle.js"></script>
