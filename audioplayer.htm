@@ -11,9 +11,10 @@
 
 
 <script>
-var pause=true  //edit here
+var pause=true, player=true  //edit here
 if(location.search) pause=!pause  //?1
 var audio=new Audio(), filesArray, i=0
+if(player) audio=document.createElement('audio');audio.controls=true;document.body.append(audio)  //
 
 document.getElementById('file-upload').onchange = function(e) {
 filesArray = this.files;  //var 
@@ -28,10 +29,14 @@ var but=document.querySelector('#shot')
 but.onclick = pause? playpause:nexttrack
 but.oncontextmenu = function(e) {e.preventDefault(); pause? nexttrack():playpause()}  //rightclick  //
 
-audio.onended = function() {i++; audio.src=URL.createObjectURL(filesArray[i]);audio.play();document.title=filesArray[i].name}
+audio.onended = function() {i++; 
+ if(filesArray[i].name.match(/m3u8?$/)) m3u(); else  //
+ audio.src=URL.createObjectURL(filesArray[i]); audio.play();document.title=filesArray[i].name}
 
 function playpause() {if(audio.paused) {audio.play();but.textContent="\u2759\u2759"} else {audio.pause();but.textContent="\u25BA"}}
 function nexttrack() {audio.onended()}
+function m3u() {fetch(filesArray[i].name).then(function(response) {response.text()
+ .then(function(text){var tmp=text.match(/^(?!#)(?!\s).*$/mg).map(encodeURI); audio.src=tmp[0]})})}
 </script>
 
 <script src="webapp.bundle.js"></script>
