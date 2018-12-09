@@ -11,13 +11,13 @@
 
 
 <script>
-var pause=true, player=true  //edit here
+var pause=true, player=true, concat=true  //edit here
 if(location.search) pause=!pause  //?1
-var audio=new Audio(), filesArray, i=0
+var audio=new Audio(), filesArray=[], i=0
 if(player) audio=document.createElement('audio');audio.controls=true;document.body.append(audio)  //
 
 document.getElementById('file-upload').onchange = function(e) {
-filesArray = this.files;  //var 
+filesArray = concat? filesArray.concat(Array.from(this.files)):Array.from(this.files);  //var 
 //console.log(filesArray)
 
 i--;audio.onended()
