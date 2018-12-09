@@ -11,7 +11,7 @@
 
 
 <script>
-var pause=true, player=true, concat=true  //edit here
+var pause=true, player=true, concat=true, repeat=false  //edit here
 if(location.search) pause=!pause  //?1
 var audio=new Audio(), filesArray=[], i=0
 if(player) audio=document.createElement('audio');audio.controls=true;document.body.append(audio)  //
@@ -29,7 +29,7 @@ var but=document.querySelector('#shot')
 but.onclick = pause? playpause:nexttrack
 but.oncontextmenu = function(e) {e.preventDefault(); pause? nexttrack():playpause()}  //rightclick  //
 
-audio.onended = function() {i++; 
+audio.onended = function() {i++; if(repeat && i==filesArray.length) i=0
  if(filesArray[i].name.match(/m3u8?$/)) m3u(); else  //
  {audio.src=URL.createObjectURL(filesArray[i]);audio.play()}; document.title=filesArray[i].name}
 
