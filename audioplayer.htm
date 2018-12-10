@@ -9,6 +9,7 @@
 <input type="file" id="file-upload" accept="audio/*" multiple />  <!-- style='background:grey' -->
 <button id="shot">&#x25BA;</button>
 <button onclick='audio.onended()'>&#x23ED;</button>  <!--  -->
+<select onclick='i=this.selectedIndex-1;audio.onended()'></select>
 
 <script>
 var pause=true, player=true, concat=true, repeat=false  //edit here
@@ -18,7 +19,7 @@ if(player) audio=document.createElement('audio');audio.controls=true;document.bo
 
 document.getElementById('file-upload').onchange = function(e) {
 filesArray = concat? filesArray.concat(Array.from(this.files)):Array.from(this.files);  //var 
-//console.log(filesArray)
+Array.from(this.files).forEach(function(it) {var option=document.createElement("option");option.text=it.name;document.querySelector('select').add(option)})
 
 i--;audio.onended()
 but.textContent="\u2759\u2759"
