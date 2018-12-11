@@ -7753,8 +7753,8 @@
             document.querySelector('#scanBtn').addEventListener('click', scan);
 
  async function test_heart(miband, log) {  //dj
-              log('Heart Rate Monitor (single-shot)');
-              log('Result:', await miband.hrmRead()); 
+              //log('Heart Rate Monitor (single-shot)');
+              log((Date.now()/1000).toFixed()+';', await miband.hrmRead());  //csv
  }
 
 }());  //
