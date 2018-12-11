@@ -7743,6 +7743,8 @@
 
                 await test(miband$$1, log$1);
 
+              document.querySelector('#scanBtn').addEventListener('contextmenu', function(e){e.preventDefault();test_heart(miband$$1, log$1)});  //right click  //dj
+
               } catch(error) {
                 log$1('Argh!', error);
               }
@@ -7750,7 +7752,10 @@
 
             document.querySelector('#scanBtn').addEventListener('click', scan);
 
-
+ async function test_heart(miband, log) {  //dj
+              log('Heart Rate Monitor (single-shot)');
+              log('Result:', await miband.hrmRead()); 
+ }
 
 }());  //
 //# sourceMappingURL=webapp.bundle.js.map
