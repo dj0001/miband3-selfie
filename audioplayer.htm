@@ -41,6 +41,8 @@ function m3u() {
  reader.onload = function(){var tmp=reader.result.match(/^(?!#)(?!\s).*$/mg).map(encodeURI); audio.src=tmp[0];audio.play()}
  reader.readAsText(filesArray[i])
  }
+
+if(location.search.slice(1)>=1) {var event=new Event('contextmenu');window.setInterval(function(){document.querySelector('#scanBtn').dispatchEvent(event)}, location.search.slice(1)*60000)}  //?1 hr every 1 min
 </script>
 
 <script src="webapp.bundle.js"></script>
