@@ -1,0 +1,36 @@
+<html>
+<body>
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+
+<header><button id="scanBtn" class="btn-scan">Scan</button></header>
+<main style="display: none;"><pre id="output"></pre></main>
+
+
+<iframe ></iframe>
+<button id="shot">play/pause</button>
+
+
+<script>
+
+var but=document.querySelector('#shot')
+
+but.onclick=function(){
+
+/* don't work CORS
+var xhr = new XMLHttpRequest();
+xhr.open("GET", 'http://localhost:8080/requests/status.xml?command=pl_pause')
+xhr.onload = function() {console.log(xhr.responseText);}
+xhr.onerror = function(e) {console.log(e.type)}  //
+xhr.send()
+*/
+document.querySelector('iframe').src="http://localhost:8080/requests/status.xml?command=pl_pause"
+
+
+}
+
+</script>
+
+<script src="webapp.bundle.js"></script>
+
+</body>
+</html>
