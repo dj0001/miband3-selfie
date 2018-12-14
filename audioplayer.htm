@@ -3,7 +3,7 @@
 <head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
 
 <header><button id="scanBtn" class="btn-scan">Scan</button></header>
-<main style="display: none;"><pre id="output"></pre></main>
+<main style="display: none;"><a id="output"  style="white-space: pre;" download='pulse.csv'></a></main>
 
 
 <input type="file" id="file-upload" accept="audio/*" multiple />  <!-- style='background:grey' -->
@@ -43,6 +43,7 @@ function m3u() {
  }
 
 if(location.search.slice(1)>=1) {var event=new Event('contextmenu');window.setInterval(function(){document.querySelector('#scanBtn').dispatchEvent(event)}, location.search.slice(1)*60000)}  //?1 hr every 1 min
+output.onclick=function(){output.href='data:,'+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])}  //download
 </script>
 
 <script src="webapp.bundle.js"></script>
