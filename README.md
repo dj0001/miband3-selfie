@@ -13,4 +13,4 @@ then go to devicesearch (under More) on miband, longpress, and theMediaDevice sh
 
 ## Changelog
 
-15.12. add control vlc-player with web-interface [Demo](https://dj0001.github.io/miband3-selfie/vlc.htm)
+15.12. add control vlc-player with [web-interface](https://wiki.videolan.org/Documentation:Modules/http_intf/#VLC_2.0.0_and_later) [Demo](https://dj0001.github.io/miband3-selfie/vlc.htm)
