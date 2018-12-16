@@ -1,0 +1,59 @@
+<html>
+<body>
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+
+<header>
+        <h1>
+            <span class="h1-left">MiBand</span>
+          <a href="https://github.com/dj0001/miband3-selfie">
+            <span class="h1-right">Notify</span>
+          </a>
+        </h1>
+<button id="scanBtn" class="btn-scan">Scan</button>
+</header>
+<main style="display: none;"><pre id="output"></pre></main>
+
+
+<!-- <iframe ></iframe>  -->
+<button id="shot">&#x25BA;</button>
+
+
+<script>
+//var pause=true  //edit here
+//if(location.search) pause=!pause  //?1
+
+//var w1 = window.open("http://localhost:8080/requests/status.xml")
+var but=document.querySelector('#shot')
+
+but.onclick=function(){
+
+//w1.location.href = "http://localhost:8080/requests/status.xml?command=pl_"+(pause? 'pause':'next')  //?command=pl_next
+//todo: send a notifaction
+showNotification('mibandButtonPressed')
+
+}
+
+if(navigator.serviceWorker) navigator.serviceWorker.register('sw_notify.js');
+function showNotification(tx) {
+  if(typeof(Notification) != "undefined") Notification.requestPermission(function(result) {
+    if (result === 'granted') {
+      navigator.serviceWorker.ready.then(function(registration) {
+        registration.showNotification('Miband', {
+          body: tx,  //+' Warnungen!'
+          icon: 'favicon.png',  //icons/warn.png
+          vibrate: [200, 100, 200, 100, 200, 100, 200],
+          tag: 'vibration-sample'
+        });
+      });
+    }
+  });
+}
+if(typeof(Notification) != "undefined") Notification.requestPermission();  // &&qs!=="5"
+
+
+</script>
+
+<script src="webapp.bundle.js"></script>
+
+</body>
+</html>
