@@ -23,7 +23,7 @@ var w1 = window.open("http://localhost:8080/requests/status.xml")
 var but=document.querySelector('#shot')
 
 but.onclick=function(){
-
+this.style.background='yellow'  //
 w1.location.href = "http://localhost:8080/requests/status.xml?command=pl_"+(pause? 'pause':'next')  //?command=pl_next
 }
 
