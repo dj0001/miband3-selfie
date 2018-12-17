@@ -15,6 +15,7 @@
 var pause=true, player=true, concat=true, repeat=false  //edit here
 if(location.search) pause=!pause  //?1
 var audio=new Audio(), filesArray=[], i=0
+var pls, j, level=0  //advaced playlist
 if(player) audio=document.createElement('audio');audio.controls=true;document.body.append(audio)  //
 
 document.getElementById('file-upload').onchange = function(e) {
@@ -30,15 +31,20 @@ var but=document.querySelector('#shot')
 but.onclick = pause? playpause:nexttrack
 but.oncontextmenu = function(e) {e.preventDefault(); pause? nexttrack():playpause()}  //rightclick  //
 
-audio.onended = function() {i++; if(repeat && i==filesArray.length) i=0
+audio.onended = function() {
+ if(!level)
+ {i++; if(repeat && i==filesArray.length) i=0
  if(filesArray[i].name.match(/m3u8?$/)) m3u(); else  //
  {audio.src=URL.createObjectURL(filesArray[i]);audio.play()}; document.title=filesArray[i].name}
-
+ else
+ {j++; if(j==pls.length) {level=0;audio.onended();return}
+ {audio.src=pls[j];audio.play()}; document.title=audio.src}
+}
 function playpause() {if(audio.paused) {audio.play();but.textContent="\u2759\u2759"} else {audio.pause();but.textContent="\u25BA"}}
 function nexttrack() {audio.onended()}
 function m3u() {
  var reader = new FileReader()
- reader.onload = function(){var tmp=reader.result.match(/^(?!#)(?!\s).*$/mg).map(encodeURI); audio.src=tmp[0];audio.play()}
+ reader.onload = function(){var tmp=reader.result.match(/^(?!#)(?!\s).*$/mg).map(encodeURI); pls=tmp;level=1;j=-1;audio.onended()}  //audio.src=tmp[0];audio.play()
  reader.readAsText(filesArray[i])
  }
 
