@@ -37,14 +37,14 @@ audio.onended = function() {
  if(filesArray[i].name.match(/m3u8?$/)) m3u(); else  //
  {audio.src=URL.createObjectURL(filesArray[i]);audio.play()}; document.title=filesArray[i].name}
  else
- {j++; if(j==pls.length) {level=0;audio.onended();return}
+ {j++; if(j==pls.length) {level=0;audio.onended();return}  //level--
  {audio.src=pls[j];audio.play()}; document.title=audio.src}
 }
 function playpause() {if(audio.paused) {audio.play();but.textContent="\u2759\u2759"} else {audio.pause();but.textContent="\u25BA"}}
 function nexttrack() {audio.onended()}
 function m3u() {
  var reader = new FileReader()
- reader.onload = function(){var tmp=reader.result.match(/^(?!#)(?!\s).*$/mg).map(encodeURI); pls=tmp;level=1;j=-1;audio.onended()}  //audio.src=tmp[0];audio.play()
+ reader.onload = function(){var tmp=reader.result.match(/^(?!#)(?!\s).*$/mg).map(encodeURI); level=1;pls=tmp;j=-1;audio.onended()}  //audio.src=tmp[0];audio.play()
  reader.readAsText(filesArray[i])
  }
 
