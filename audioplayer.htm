@@ -13,7 +13,7 @@
 
 <script>
 var pause=true, player=true, concat=true, repeat=false  //edit here
-if(location.search) pause=!pause  //?1
+if(location.search.slice(1)=='0') pause=!pause  //?0
 var audio=new Audio(), filesArray=[], i=0
 var pls, j, level=0  //advaced playlist
 if(player) audio=document.createElement('audio');audio.controls=true;document.body.append(audio)  //
@@ -50,6 +50,8 @@ function m3u() {
 
 if(location.search.slice(1)>=1) {var event=new Event('contextmenu');window.setInterval(function(){document.querySelector('#scanBtn').dispatchEvent(event)}, location.search.slice(1)*60000)}  //?1 hr every 1 min
 output.onclick=function(){output.href='data:,'+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])}  //download
+
+if(isNaN(location.search.slice(1))) {audio.src=location.search.slice(1);audio.play()}  //?http...  open stream
 </script>
 
 <script src="webapp.bundle.js"></script>
