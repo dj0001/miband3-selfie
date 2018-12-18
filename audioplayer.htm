@@ -51,7 +51,7 @@ function m3u() {
 if(location.search.slice(1)>=1) {var event=new Event('contextmenu');window.setInterval(function(){document.querySelector('#scanBtn').dispatchEvent(event)}, location.search.slice(1)*60000)}  //?1 hr every 1 min
 output.onclick=function(){output.href='data:,'+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])}  //download
 
-if(isNaN(location.search.slice(1))) {audio.src=location.search.slice(1);audio.play()}  //?http...  open stream
+if(isNaN(location.search.slice(1))) {level=1;pls=location.search.slice(1).split('%0A');j=-1;audio.onended()}  //?http...  open stream
 </script>
 
 <script src="webapp.bundle.js"></script>
