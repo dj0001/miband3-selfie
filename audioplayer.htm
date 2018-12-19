@@ -52,6 +52,7 @@ if(location.search.slice(1)>=1) {var event=new Event('contextmenu');window.setIn
 output.onclick=function(){output.href='data:,'+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])}  //download
 
 if(isNaN(location.search.slice(1))) {level=1;pls=location.search.slice(1).split('%0A');j=-1;audio.onended()}  //?http...  open stream
+audio.onerror=function(){if(audio.src.slice(-1)!=";") {audio.src+=";"; audio.play()}}  //SHOUTcast1
 </script>
 
 <script src="webapp.bundle.js"></script>
