@@ -34,7 +34,7 @@ but.oncontextmenu = function(e) {e.preventDefault(); pause? nexttrack():playpaus
 audio.onended = function() {
  if(!level)
  {i++; if(repeat && i==filesArray.length) i=0
- if(filesArray[i].name.match(/m3u8?$/)) m3u(); else  //
+ if(filesArray[i].name.match(/m3u8?$/)) {var reader=new FileReader();reader.onload=function(){m3(reader.result)};reader.readAsText(filesArray[i])} else  //
  {audio.src=URL.createObjectURL(filesArray[i]);audio.play()}; document.title=filesArray[i].name}
  else
  {j++; if(j==pls.length) {level=0;audio.onended();return}  //level--
@@ -42,11 +42,7 @@ audio.onended = function() {
 }
 function playpause() {if(audio.paused) {audio.play();but.textContent="\u2759\u2759"} else {audio.pause();but.textContent="\u25BA"}}
 function nexttrack() {audio.onended()}
-function m3u() {
- var reader = new FileReader()
- reader.onload = function(){var tmp=reader.result.match(/^(?!#)(?!\s).*$/mg).map(encodeURI); level=1;pls=tmp;j=-1;audio.onended()}  //audio.src=tmp[0];audio.play()
- reader.readAsText(filesArray[i])
- }
+function m3(that) {var tmp=that.match(/^(?!#)(?!\s).*$/mg).map(encodeURI); level++;pls=tmp;j=-1;audio.onended()}
 
 if(location.search.slice(1)>=1) {var event=new Event('contextmenu');window.setInterval(function(){document.querySelector('#scanBtn').dispatchEvent(event)}, location.search.slice(1)*60000)}  //?1 hr every 1 min
 output.onclick=function(){output.href='data:,'+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])}  //download
