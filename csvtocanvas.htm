@@ -2,30 +2,44 @@
 <html>
 <body>
 
-<input type="file" /><br>
-<canvas id="myCanvas" width="720" height="120"
-style="border:1px solid #d3d3d3;">
-Your browser does not support the canvas element.
-</canvas>
+<header><button id="scanBtn" class="btn-scan">Scan</button></header>
+<canvas id="myCanvas" width="720" height="120" style="border:1px solid #d3d3d3;"></canvas>
+<main style="display: none;"><a id="output"  style="white-space: pre;" download='pulse.csv'></a></main>
+
+<input type="file" />
 
 <script>
-
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
+ctx.fillText(120, 700, 8)  //
+
+var X0
+
+function manu(item){
+ const line = item.split(';')
+ const y=line[location.search.slice(1)]||line[1]  //?4 row
+ if(!X0) {X0=line[0];ctx.fillText(new Date(X0*1000).toJSON().slice(11,16), 0, 120)};
+ if(y!=255) ctx.lineTo((line[0]-X0)/60,120-1*y);
+}
+
+var mutationObserver = new MutationObserver(function() {
+ const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {manu(tmp);ctx.stroke()}
+});
+
+mutationObserver.observe(output, {childList: true});
+
+if(location.search.slice(1)>=1) {var event=new Event('contextmenu');window.setInterval(function(){document.querySelector('#scanBtn').dispatchEvent(event)}, location.search.slice(1)*60000)}  //?1 hr every 1 min
+output.onclick=function(){output.href='data:,'+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])}  //download
 
 document.querySelector('input').onchange = function() {var reader=new FileReader();reader.onload=function(){cv(reader.result)};reader.readAsText(this.files[0])}
-function cv(that) { console.log(that)
-const lines = that.replace(/\r?\n$/,'').split(/\r?\n/);
-const x0=lines[0].split(';')[0]; console.log(new Date(x0*1000))
 
-lines.forEach(function(item,index){
- const line = item.split(';')
- ctx.lineTo((line[0]-x0)/60,120-line[1]);
-})
-
-ctx.stroke();
-ctx.fillText(120, 700, 8)
+function cv(that) {
+ const lines = that.replace(/\r?\n$/,'').split(/\r?\n/);
+ lines.forEach(function(item,index){manu(item)})
+ ctx.stroke();
 }
+
 </script>
+<script src="webapp.bundle.js"></script>
 </body>
 </html>
