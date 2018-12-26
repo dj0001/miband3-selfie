@@ -13,17 +13,18 @@ var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 ctx.fillText(120, 700, 8)  //
 
-var X0
+var X0, xavg=xind=0  //
 
 function manu(item){
  const line = item.split(';')
  const y=line[location.search.slice(1)]||line[1]  //?4 row
  if(!X0) {X0=line[0];ctx.fillText(new Date(X0*1000).toJSON().slice(11,16), 0, 120)};
  if(y!=255) ctx.lineTo((line[0]-X0)/60,120-1*y);
+ xavg+=1*y; xind++
 }
 
 var mutationObserver = new MutationObserver(function() {
- const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {manu(tmp);ctx.stroke()}
+ const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {manu(tmp);ctx.stroke();console.log(xavg/xind)}
 });
 
 mutationObserver.observe(output, {childList: true});
@@ -37,6 +38,7 @@ function cv(that) {
  const lines = that.replace(/\r?\n$/,'').split(/\r?\n/);
  lines.forEach(function(item,index){manu(item)})
  ctx.stroke();
+ console.log(xavg/xind)
 }
 
 </script>
