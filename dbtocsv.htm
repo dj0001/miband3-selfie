@@ -6,6 +6,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/0.5.0/js/sql.js"></script>  <!-- js/sql.js -->
 <script>
+var col=false  //edit here
+
 dbFileElm.onchange = function() {
 	var f = dbFileElm.files[0];
 	var r = new FileReader();
@@ -14,7 +16,7 @@ dbFileElm.onchange = function() {
 		db = new SQL.Database(Uints);
 		var contents = db.exec("SELECT * FROM MI_BAND_ACTIVITY_SAMPLE");  //  LIMIT 0,30
 		console.log(contents[0].columns)
-		output.href='data:,'+encodeURI(contents[0].values.join('\n').replace(/,/g,";"))
+		output.href='data:,'+encodeURI((col?contents[0].columns+'\n':'')+contents[0].values.join('\n')).replace(/,/g,";")
 	}
 	r.readAsArrayBuffer(f);
 }
