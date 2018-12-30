@@ -1,0 +1,49 @@
+<html>
+<body>
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+
+<header>
+        <h1>
+            <span class="h1-left">MiBand</span>
+          <a href="https://github.com/dj0001/miband3-selfie">
+            <span class="h1-right">Notify</span>
+          </a>
+        </h1>
+<button id="scanBtn" class="btn-scan">Scan</button>
+</header>
+<main style="display: none;"><pre id="output"></pre></main>
+
+
+<button id="shot">&#x25BA;</button>
+
+<input type='number' value='15' id='cd'> min
+
+<script>
+var but=document.querySelector('#shot')
+
+but.onclick=function(){showNotification('mibandButtonPressed')}
+
+if(navigator.serviceWorker) navigator.serviceWorker.register('sw_notify.js');
+function showNotification(tx) {
+  if(typeof(Notification) != "undefined") Notification.requestPermission(function(result) {
+    if (result === 'granted') {
+      navigator.serviceWorker.ready.then(function(registration) {
+        registration.showNotification('Miband', {
+          body: tx,  //+' Warnungen!'
+          icon: 'favicon.png',  //icons/warn.png
+          vibrate: [200, 100, 200, 100, 200, 100, 200],
+          tag: 'vibration-sample'
+        });
+      });
+    }
+  });
+}
+if(typeof(Notification) != "undefined") Notification.requestPermission();  // &&qs!=="5"
+
+setInterval(function(){ cd.value--;if(cd.value==0) showNotification('timer') }, 60000)  //countdown
+</script>
+
+<script src="webapp.bundle.js"></script>
+
+</body>
+</html>
