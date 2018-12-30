@@ -16,7 +16,7 @@
 
 <button id="shot">&#x25BA;</button>
 
-<input type='number' value='15' id='cd'> min
+<input type='number' value='15' id='cd'> min <button id="pp">&#x25B7;</button>
 
 <script>
 var but=document.querySelector('#shot')
@@ -40,7 +40,10 @@ function showNotification(tx) {
 }
 if(typeof(Notification) != "undefined") Notification.requestPermission();  // &&qs!=="5"
 
-setInterval(function(){ cd.value--;if(cd.value==0) showNotification('timer') }, 60000)  //countdown
+pp.onclick=function(){ if(pp.textContent=='\u25B7')  //countdown
+ {t=setInterval(function(){ cd.value--;if(cd.value==0) showNotification('timer') }, 60000); pp.textContent='\u2759\u2759'}
+ else {clearInterval(t); pp.textContent='\u25B7'} }
+//pp.click()
 </script>
 
 <script src="webapp.bundle.js"></script>
