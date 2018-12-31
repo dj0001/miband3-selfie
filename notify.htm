@@ -41,10 +41,12 @@ function showNotification(tx) {
 if(typeof(Notification) != "undefined") Notification.requestPermission();  // &&qs!=="5"
 
 pp.onclick=function(){ if(pp.textContent=='\u25B7')  //countdown
- {t1=Date.now()+cd.value*60000; t=setInterval(function(){cd.value=((t1-Date.now())/60000).toFixed(1);if(cd.value==0) showNotification('timer') }, 6000);
+ {t1=Date.now()+cd.value*60000;
+  t=setInterval(function(){cd.value=((t1-Date.now())/60000).toFixed(1);if(cd.value==0) {showNotification('timer');if(location.search) audio.play()} }, 6000);
   pp.textContent='\u2759\u2759'}
  else {clearInterval(t); pp.textContent='\u25B7'} }
 //pp.click()
+if(location.search) {var audio=new Audio(); audio.src='https://upload.wikimedia.org/wikipedia/commons/b/bc/Alarmclock-mechanical.ogg'}  //?0 audio, local
 </script>
 
 <script src="webapp.bundle.js"></script>
