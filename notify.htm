@@ -41,7 +41,7 @@ function showNotification(tx) {
 if(typeof(Notification) != "undefined") Notification.requestPermission();  // &&qs!=="5"
 
 pp.onclick=function(){ if(pp.textContent=='\u25B7')  //countdown
- {t=setInterval(function(){ cd.value--;if(cd.value==0) showNotification('timer') }, 60000); pp.textContent='\u2759\u2759'}
+ {t=setInterval(function(){ cd.value=(cd.value*10-1)/10;if(cd.value==0) showNotification('timer') }, 6000); pp.textContent='\u2759\u2759'}
  else {clearInterval(t); pp.textContent='\u25B7'} }
 //pp.click()
 </script>
