@@ -17,6 +17,7 @@
 <button id="shot">&#x25BA;</button>
 
 <br><input type='time' value='00:15' id='cd'> hh:min <button id="pp">&#x25B7;</button>
+<br><progress value=0 id='pr'>
 
 <script>
 var but=document.querySelector('#shot')
@@ -41,8 +42,8 @@ function showNotification(tx) {
 if(typeof(Notification) != "undefined") Notification.requestPermission();  // &&qs!=="5"
 
 pp.onclick=function(){ if(pp.textContent=='\u25B7')  //countdown
- {var tmp=cd.value.split(':');tmp=1000*((tmp[2]||0)*1+tmp[1]*60+tmp[0]*3600); t1=Date.now()+tmp
-  t=setInterval(function(){cd.value=new Date(t1-Date.now()).toJSON().slice(11,19);if(cd.value=='00:00:00') {showNotification('timer');if(location.search) audio.play()} }, 1000);
+ {var tmp=cd.value.split(':');tmp=1000*((tmp[2]||0)*1+tmp[1]*60+tmp[0]*3600); t1=Date.now()+tmp; t0=Date.now()
+  t=setInterval(function(){cd.value=new Date(t1-Date.now()).toJSON().slice(11,19);if(cd.value=='00:00:00') {showNotification('timer');if(location.search) audio.play()};pr.value=(Date.now()-t0)/(t1-t0) }, 1000);
   pp.textContent='\u2759\u2759'}
  else {clearInterval(t); pp.textContent='\u25B7'} }
 //pp.click()
