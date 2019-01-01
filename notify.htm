@@ -42,12 +42,13 @@ function showNotification(tx) {
 if(typeof(Notification) != "undefined") Notification.requestPermission();  // &&qs!=="5"
 
 pp.onclick=function(){ if(pp.textContent=='\u25B7')  //countdown
- {var tmp=cd.value.split(':');t1=Date.now()+1000*((tmp[2]||0)*1+tmp[1]*60+tmp[0]*3600); t0=Date.now(); if(location.search.slice(1)==1) {t1=new Date();t1.setHours(tmp[0],tmp[1])}  //?1 alarmclock, ?2 stopwatch
-  t=setInterval(function(){cd.value=new Date(location.search.slice(1)==2?Date.now()-t0:t1-Date.now()).toJSON().slice(11,19);if(cd.value=='00:00:00') {showNotification('timer');if(location.search) audio.play()};pr.value=(Date.now()-t0)/(t1-t0) }, 1000);
+ {var tmp=cd.value.split(':');t1=Date.now()+1000*((tmp[2]||0)*1+tmp[1]*60+tmp[0]*3600); t0=Date.now(); if(location.search.slice(1)==1) {t1=new Date();t1.setHours(tmp[0],tmp[1])}  //?1 alarmclock
+  t=setInterval(function(){cd.value=new Date(location.search.slice(1)==2?Date.now()+t1-2*t0:t1-Date.now()).toJSON().slice(11,19);if(cd.value=='00:00:00') {showNotification('timer');if(location.search) audio.play()};pr.value=(Date.now()-t0)/(t1-t0) }, 1000);
   pp.textContent='\u2759\u2759'}
  else {clearInterval(t); pp.textContent='\u25B7'} }
 //pp.click()
 if(location.search) {var audio=new Audio(); audio.src='https://upload.wikimedia.org/wikipedia/commons/b/bc/Alarmclock-mechanical.ogg'}  //?0 audio, local
+if(location.search.slice(1)==2) cd.value='00:00'  //?2 stopwatch
 </script>
 
 <script src="webapp.bundle.js"></script>
