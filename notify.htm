@@ -51,6 +51,7 @@ if(isNaN(ls)) {var audio=new Audio(); audio.src='https://upload.wikimedia.org/wi
 if(ls=='00') cd.value='00:00'  //?00 stopwatch
  else if(ls&&!isNaN(ls)) {cd.value=new Date(Date.now()+ls*3600000).toJSON().slice(11,19);pp.click()} //?tz e.g.?-1 worldclock
 pp.oncontextmenu=function(e){e.preventDefault();document.querySelector('ol').insertAdjacentHTML('afterbegin', '<li>'+cd.value+'</li>')}  //longtouch
+navigator.getWakeLock("screen").then(function(wakeLock) { var request = wakeLock.createRequest(); console.log(wakeLock.active); });  //system, flag
 </script>
 
 <script src="webapp.bundle.js"></script>
