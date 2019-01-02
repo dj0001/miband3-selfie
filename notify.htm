@@ -44,7 +44,7 @@ if(typeof(Notification) != "undefined") Notification.requestPermission();  // &&
 const ls=location.search.slice(1)
 pp.onclick=function(){ if(pp.textContent=='\u25B7')  //countdown
  {var tmp=cd.value.split(':');t1=Date.now()+1000*((tmp[2]||0)*1+tmp[1]*60+tmp[0]*3600); t0=Date.now(); if(ls=='a') {t1=new Date();t1.setHours(tmp[0],tmp[1])}  //?a alarmclock
-  t=setInterval(function(){cd.value=new Date(ls&&!isNaN(ls)?Date.now()+t1-2*t0:t1-Date.now()).toJSON().slice(11,19);if(cd.value=='00:00:00') {showNotification('timer');if(isNaN(ls)) audio.play()};pr.value=(Date.now()-t0)/(t1-t0) }, 1000);
+  t=setInterval(function(){cd.value=new Date(ls&&!isNaN(ls)?Date.now()+t1-2*t0:t1-Date.now()).toJSON().slice(11,ls=='00'?21:19);if(cd.value=='00:00:00') {showNotification('timer');if(isNaN(ls)) audio.play()};pr.value=(Date.now()-t0)/(t1-t0) }, 100);
   pp.textContent='\u2759\u2759'}
  else {clearInterval(t); pp.textContent='\u25B7'} }
 if(isNaN(ls)) {var audio=new Audio(); audio.src='https://upload.wikimedia.org/wikipedia/commons/b/bc/Alarmclock-mechanical.ogg'}  //?s sound, local
