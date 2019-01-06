@@ -39,9 +39,9 @@ function showNotification(tx) {
     }
   });
 }
-if(typeof(Notification) != "undefined") Notification.requestPermission();  // &&qs!=="5"
+if(typeof(Notification) != "undefined") Notification.requestPermission();
 
-const ls=location.search.slice(1); var i=0, gl, glb  //pomodori
+var ls=location.search.slice(1); var i=0, gl, glb  //pomodori
 pp.onclick=function(){ if(pp.textContent=='\u25B7')  //countdown
  {var tmp=cd.value.split(':');t1=Date.now()+1000*((tmp[2]||0)*1+tmp[1]*60+tmp[0]*3600); t0=Date.now(); if(isNaN(ls)) {t1=new Date();t1.setHours(tmp[0],tmp[1])}  // alarmclock
   if(!gl) {gl=t1-t0;localStorage.cd=cd.value}; if(cd.value=='00:00') localStorage.removeItem("cd")
@@ -53,11 +53,12 @@ pp.onclick=function(){ if(pp.textContent=='\u25B7')  //countdown
   pp.textContent='\u2759\u2759'}
  else {clearInterval(t); pp.textContent='\u25B7'} }
 
+if(!ls) cd.value=localStorage.cd||'00:15'
+else if(ls.match(/^\d\d%20\d?\d$/)) {var tmp=ls.split('%20');ls='';cd.value='00:'+tmp[0];glb=tmp[1]*60000}  //?45 15 ,scheme in min
 var audio=new Audio(); audio.src = isNaN(ls)? ls:'https://upload.wikimedia.org/wikipedia/commons/b/bc/Alarmclock-mechanical.ogg'  //?...ogg alarmclock
 if(ls=='00') cd.value='00:00'  //?00 stopwatch
  else if(ls&&!isNaN(ls)) {cd.value=new Date(Date.now()+ls*3600000).toJSON().slice(11,19);pp.click()} //?tz e.g.?-1 worldclock
 pp.oncontextmenu=function(e){e.preventDefault();if(ls) document.querySelector('ol').insertAdjacentHTML('afterbegin', '<li>'+cd.value+'</li>'); else glb=new Date('1970-01-01T'+cd.value+':00.000Z').getTime()}  //longtouch set break
-if(!ls) cd.value=localStorage.cd||'00:15'
 navigator.getWakeLock("system").then(function(wakeLock) { var request = wakeLock.createRequest(); console.log(wakeLock.active); });  //screen, flag
 </script>
 
