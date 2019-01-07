@@ -1,6 +1,7 @@
-<html>
+<!doctype html>
+<html lang="en">
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/png" href="favicon.png" /><title>MiBandNotify</title></head>
 <body>
-<head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
 
 <header>
         <h1>
@@ -46,7 +47,7 @@ pp.onclick=function(){ if(pp.textContent=='\u25B7')  //countdown
  {var tmp=cd.value.split(':');t1=Date.now()+1000*((tmp[2]||0)*1+tmp[1]*60+tmp[0]*3600); t0=Date.now(); if(isNaN(ls)) {t1=new Date();t1.setHours(tmp[0],tmp[1])}  // alarmclock
   if(!gl) {gl=t1-t0;localStorage.cd=cd.value}; if(cd.value=='00:00') localStorage.removeItem("cd")
   t=setInterval(function(){
-   cd.value=new Date(ls&&!isNaN(ls)?Date.now()+t1-2*t0:t1-Date.now()).toJSON().slice(11,ls=='00'?21:19);
+   document.title=cd.value=new Date(ls&&!isNaN(ls)?Date.now()+t1-2*t0:t1-Date.now()).toJSON().slice(11,ls=='00'?21:19);
    if(cd.value=='00:00:00') {showNotification('timer'+(i%8+1)); audio.paused?audio.play():audio.pause();if(!ls){t1=Date.now()+(!((i+1)%(r*2-1))? gll||glb||gl : i%2?gl:glb||gl);t0=Date.now();i++};wakeLockRequest.cancel()};
    pr.value=(Date.now()-t0)/(t1-t0)
   }, ls=='00'?100:1000);
