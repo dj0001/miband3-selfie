@@ -54,7 +54,7 @@ pp.onclick=function(){ if(pp.textContent=='\u25B7')  //countdown
  else {clearInterval(t); pp.textContent='\u25B7'} }
 
 if(!ls) cd.value=localStorage.cd||'00:15'
-else if(ls.match(/^\d\d%20\d?\d/)) {var tmp=ls.split('%20');ls='';cd.value='00:'+tmp[0];glb=tmp[1]*60000;gll=tmp[2]*60000;r=tmp[3]||r}  //?45 15 ,scheme in min
+else if(ls.match(/^\d?\d%20\d?\d/)) {var tmp=ls.split('%20');ls='';cd.value='00:'+('0'+tmp[0]).slice(-2);glb=tmp[1]*60000;gll=tmp[2]*60000;r=tmp[3]||r}  //?45 15 ,scheme in min
 var audio=new Audio(); audio.src = isNaN(ls)? ls:'https://upload.wikimedia.org/wikipedia/commons/b/bc/Alarmclock-mechanical.ogg'  //?...ogg alarmclock
 if(ls=='00') cd.value='00:00'  //?00 stopwatch
  else if(ls&&!isNaN(ls)) {cd.value=new Date(Date.now()+ls*3600000).toJSON().slice(11,19);pp.click()} //?tz e.g.?-1 worldclock
