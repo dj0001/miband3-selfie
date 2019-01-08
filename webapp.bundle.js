@@ -7744,6 +7744,7 @@
                 await test(miband$$1, log$1);
 
               document.querySelector('#scanBtn').addEventListener('contextmenu', function(e){e.preventDefault();test_heart(miband$$1, log$1)});  //right click  //dj
+              Notification.onshow = function() {console.log('noti');}  //
 
               } catch(error) {
                 log$1('Argh!', error);
