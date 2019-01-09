@@ -7744,6 +7744,7 @@
                 await test(miband$$1, log$1);
 
               document.querySelector('#scanBtn').addEventListener('contextmenu', function(e){e.preventDefault();test_heart(miband$$1, log$1)});  //right click  //dj
+              document.querySelector('.h1-right').addEventListener('contextmenu', function(e){e.preventDefault();test_noti(miband$$1, log$1)});  //smartalarm
 
               } catch(error) {
                 log$1('Argh!', error);
@@ -7755,6 +7756,10 @@
  async function test_heart(miband, log) {  //dj
               //log('Heart Rate Monitor (single-shot)');
               log((Date.now()/1000).toFixed()+';', await miband.hrmRead());  //csv
+ }
+ async function test_noti(miband, log) {  //dj
+              log('Notifications demo...');  //smartalarm
+              await miband.showNotification('message');  //vibrate
  }
 
 }());  //
