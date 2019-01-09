@@ -49,7 +49,7 @@ pp.onclick=function(){ if(pp.textContent=='\u25B7')  //countdown
   t=setInterval(function(){
    document.title=cd.value=new Date(ls&&!isNaN(ls)?Date.now()+t1-2*t0:t1-Date.now()).toJSON().slice(11,ls=='00'?21:19);
    if(cd.value=='01:00:00'||cd.value=='03:00:00') document.querySelector('#scanBtn').dispatchEvent(event)  //smart alarm
-   if(cd.value=='00:00:00') {showNotification('timer'+(i%8+1)); audio.paused?audio.play():audio.pause();if(!ls){t1=Date.now()+(!((i+1)%(r*2-1))? gll||glb||gl : i%2?gl:glb||gl);t0=Date.now();i++};wakeLockRequest.cancel()};
+   if(cd.value=='00:00:00') {showNotification('timer'+(i%8+1)); audio.paused?audio.play():audio.pause();if(!ls){t1=Date.now()+(!((i+1)%(r*2-1))? gll||glb||gl : i%2?gl:glb||gl);t0=Date.now();i++};document.querySelector('.h1-right').dispatchEvent(event);wakeLockRequest.cancel()};
    pr.value=(Date.now()-t0)/(t1-t0)
   }, ls=='00'?100:1000);
   pp.textContent='\u2759\u2759'}
