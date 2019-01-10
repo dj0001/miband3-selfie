@@ -63,7 +63,7 @@ if(ls=='00') cd.value='00:00'  //?00 stopwatch
 pp.oncontextmenu=function(e){e.preventDefault();if(ls) document.querySelector('ol').insertAdjacentHTML('afterbegin', '<li>'+cd.value+'</li>'); else glb=new Date('1970-01-01T'+cd.value+':00.000Z').getTime()}  //longtouch set break
 
 var event=new Event('contextmenu'), p0  //smartalarm
-var mutationObserver = new MutationObserver(function() {const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {if(!p0) p0=tmp.split(';')[1]; else if(tmp.split(';')[1]>p0) showNotification('smarttimer')} });
+var mutationObserver = new MutationObserver(function() {const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {if(!p0) p0=tmp.split(';')[1]; else if(tmp.split(';')[1]>p0) document.querySelector('.h1-right').dispatchEvent(event)} });
 mutationObserver.observe(output, {childList: true});
 navigator.getWakeLock("system").then(function(wakeLock) { var request = wakeLock.createRequest(); console.log(wakeLock.active); });  //screen, flag
 </script>
