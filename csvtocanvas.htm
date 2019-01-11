@@ -22,6 +22,14 @@ function manu(item){
  if(!X0) {X0=line[0];ctx.fillText(new Date(X0*1000).toJSON().slice(11,16), 0, canvas.height)};
  if(y!=255) ctx.lineTo((line[0]-X0)/60,canvas.height-1*y);
  xavg+=1*y; xind++
+
+ var uri="./";  //edit here upload
+ var xhr = new XMLHttpRequest();
+ xhr.open("POST", uri, true);
+ var fd = new FormData();
+ var blob=new Blob([y], {type : 'text/plain'})
+ fd.append('file', blob, "rate.txt");
+ xhr.send(fd)
 }
 
 var mutationObserver = new MutationObserver(function() {
