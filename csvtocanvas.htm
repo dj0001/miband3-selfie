@@ -27,7 +27,7 @@ function manu(item){
  var xhr = new XMLHttpRequest();
  xhr.open("POST", uri, true);
  var fd = new FormData();
- var blob=new Blob([y], {type : 'text/plain'})
+ var blob=new Blob([1*y], {type : 'text/plain'})
  fd.append('file', blob, "rate.txt");
  xhr.send(fd)
 }
