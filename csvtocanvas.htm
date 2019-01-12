@@ -23,18 +23,13 @@ function manu(item){
  if(y!=255) ctx.lineTo((line[0]-X0)/60,canvas.height-1*y);
  xavg+=1*y; xind++
 
- var uri="./";  //edit here upload
- var xhr = new XMLHttpRequest();
- xhr.open("POST", uri, true);
- var fd = new FormData();
- var blob=new Blob([1*y], {type : 'text/plain'})
- fd.append('file', blob, "rate.txt");
- xhr.send(fd)
  document.querySelector('.h1-right').textContent=1*y  //OBS overlay
 }
 
+function upload(y){var uri="./";var xhr=new XMLHttpRequest();xhr.open("POST", uri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
+
 var mutationObserver = new MutationObserver(function() {
- const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {manu(tmp);ctx.stroke();console.log(xavg/xind)}
+ const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {manu(tmp);ctx.stroke();console.log(xavg/xind);upload(tmp.split(';')[1])}
 });
 
 mutationObserver.observe(output, {childList: true});
