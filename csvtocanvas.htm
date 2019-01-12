@@ -30,6 +30,7 @@ function manu(item){
  var blob=new Blob([1*y], {type : 'text/plain'})
  fd.append('file', blob, "rate.txt");
  xhr.send(fd)
+ document.querySelector('.h1-right').textContent=1*y  //OBS overlay
 }
 
 var mutationObserver = new MutationObserver(function() {
