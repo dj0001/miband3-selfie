@@ -67,6 +67,10 @@ scr.onload=function(){
 }
 document.body.appendChild(scr)
 }
+
+if(location.search=='?0') window.setInterval(function(){ document.body.style.all='initial';  //?0 monitor
+ fetch('rate.txt').then(function(response) {response.text().then(function(text){document.body.innerHTML=text})})
+}, 60000)
 </script>
 <script src="webapp.bundle.js"></script>
 </body>
