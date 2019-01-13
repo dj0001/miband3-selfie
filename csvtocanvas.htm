@@ -2,13 +2,14 @@
 <html>
 <body>
 
-<header><h1><a href="https://github.com/dj0001/miband3-selfie" class="h1-right">HR</a></h1><button id="scanBtn" class="btn-scan">Scan</button></header>
+<header><h1><a href="https://github.com/dj0001/miband3-selfie" class="h1-right" style='color:#41c5f4'>HR</a></h1><button id="scanBtn" class="btn-scan">Scan</button></header>
 <canvas id="myCanvas" width="720" height="120" style="border:1px solid #d3d3d3;"></canvas>
 <main style="display: none;"><a style="cursor: pointer;white-space: pre" id="output" download='pulse.csv'></a></main>
 
 <input type="file" id="upl"/><label for="upl">Optionally upload HR.csv</label>
 
 <script>
+var upluri=''  // './' edit here
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 ctx.fillText(canvas.height, 700, 8)  //
@@ -26,10 +27,10 @@ function manu(item){
  document.querySelector('.h1-right').textContent=1*y  //OBS overlay
 }
 
-function upload(y){var uri="./";var xhr=new XMLHttpRequest();xhr.open("POST", uri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
+function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
 
 var mutationObserver = new MutationObserver(function() {
- const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {manu(tmp);ctx.stroke();console.log(xavg/xind);upload(tmp.split(';')[1])}
+ const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {manu(tmp);ctx.stroke();console.log(xavg/xind);if(upluri) upload(tmp.split(';')[1])}
 });
 
 mutationObserver.observe(output, {childList: true});
