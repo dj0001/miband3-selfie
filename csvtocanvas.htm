@@ -65,8 +65,10 @@ scr.onload=function(){
 document.body.appendChild(scr)
 }
 
-if(location.search=='?0') window.setInterval(function(){ document.body.style.all='initial';  //?0 monitor
- fetch('rate.txt').then(function(response) {response.text().then(function(text){document.body.innerHTML=text})})
+if(location.search=='?m') window.setInterval(function(){ //document.body.style.all='initial';  //?m monitor
+ fetch('rate.txt').then(function(response) {response.text().then(function(text){
+  manu(Date.now()/1000+';'+text);ctx.stroke()  //document.body.innerHTML=text
+ })})
 }, 60000)
 </script>
 <script src="webapp.bundle.js"></script>
