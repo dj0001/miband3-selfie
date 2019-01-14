@@ -7670,6 +7670,7 @@
               await delay(5000);
               await miband.showNotification('off');
 */
+if(location.search!='?hrmStart') {
               log('Tap MiBand button, quick!');
               miband.on('button', () => log('Tap detected'));
               try {
@@ -7678,23 +7679,23 @@
                 log('OK, nevermind ;)');
                 log('Tap devicesearch');  //
               }
-/*
-              log('Heart Rate Monitor (single-shot)');
-              log('Result:', await miband.hrmRead());
 
-              log('Heart Rate Monitor (continuous for 30 sec)...');
+              //log('Heart Rate Monitor (single-shot)');
+              //log('Result:', await miband.hrmRead());
+} else {  //?hrmStart continous
+              log('Heart Rate Monitor (continuous )...Reload to stop!');
               miband.on('heart_rate', (rate) => {
                 log('Heart Rate:', rate);
               });
               await miband.hrmStart();
-              await delay(30000);
-              await miband.hrmStop();
-
+              //await delay(30000);
+              //await miband.hrmStop();
+}
               //log('RAW data (no decoding)...')  //
               //miband.rawStart();
               //await delay(30000);
               //miband.rawStop();
-*/
+
               log('Finished.');
             }
 
@@ -7745,6 +7746,7 @@
 
               document.querySelector('#scanBtn').addEventListener('contextmenu', function(e){e.preventDefault();test_heart(miband$$1, log$1)});  //right click  //dj
               document.querySelector('.h1-right').addEventListener('contextmenu', function(e){e.preventDefault();test_noti(miband$$1, log$1)});  //smartalarm
+   if(location.search=='?hrmStart') window.addEventListener('beforeunload', function () {test_hrmStop(miband$$1, log$1)})  //hrmStop
 
               } catch(error) {
                 log$1('Argh!', error);
@@ -7760,6 +7762,9 @@
  async function test_noti(miband, log) {  //dj
               log('Notifications demo...');  //smartalarm
               await miband.showNotification('message');  //vibrate
+ }
+ async function test_hrmStop(miband, log) {
+              await miband.hrmStop()
  }
 
 }());  //
