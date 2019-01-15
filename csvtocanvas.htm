@@ -21,7 +21,7 @@ function manu(item){
  const y=line[location.search.slice(1)]||line[1]  //?4 row
  if(isNaN(y)) {canvas.title=y; return}  // 
  if(!X0) {X0=line[0];ctx.fillText(new Date(X0*1000).toJSON().slice(11,16), 0, canvas.height)};
- if(y!=255) ctx.lineTo((line[0]-X0)/60,canvas.height-1*y);
+ if(y!=255) ctx.lineTo((line[0]-X0)/(location.search=='?hrmStart'?1:60),canvas.height-1*y);
  xavg+=1*y; xind++
 
  document.querySelector('.h1-right').textContent=1*y  //OBS overlay
