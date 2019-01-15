@@ -7685,7 +7685,7 @@ if(location.search!='?hrmStart') {
 } else {  //?hrmStart continous
               log('Heart Rate Monitor (continuous )...Reload to stop!');
               miband.on('heart_rate', (rate) => {
-                log('Heart Rate:', rate);
+                log((Date.now()/1000).toFixed()+';', rate)  //log('Heart Rate:', rate);
               });
               await miband.hrmStart();
               //await delay(30000);
