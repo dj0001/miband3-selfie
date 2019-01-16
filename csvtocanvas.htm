@@ -2,7 +2,7 @@
 <html>
 <body>
 
-<header><h1><a href="https://github.com/dj0001/miband3-selfie" class="h1-right" style='color:#41c5f4'>HR</a></h1><button id="scanBtn" class="btn-scan">Scan</button></header>
+<header><h1><a href="https://github.com/dj0001/miband3-selfie" class="h1-right" style='color:#41c5f4;transition: color 1s'>HR</a></h1><button id="scanBtn" class="btn-scan">Scan</button></header>
 <canvas id="myCanvas" width="720" height="120" style="border:1px solid #d3d3d3;"></canvas>
 <main style="display: none;"><a style="cursor: pointer;white-space: pre" id="output" download='pulse.csv'></a></main>
 
@@ -25,6 +25,7 @@ function manu(item){
  xavg+=1*y; xind++
 
  document.querySelector('.h1-right').textContent=1*y  //OBS overlay
+ document.querySelector('.h1-right').style.color='hsl('+(180-y)+',100%,50%)'  //
 }
 
 function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
