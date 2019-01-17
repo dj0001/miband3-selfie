@@ -14,10 +14,10 @@ var upluri=''  // './' edit here
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-var hrs=[], xavg=xind=0  //X0
+var hrs=[]  //X0
 
 function manu(){
-var X1=hrs[hrs.length-1].split(/;|\t/)
+var X1=hrs[hrs.length-1].split(/;|\t/), xavg=0
 document.querySelector('.h1-right').textContent=X1[1]  //crop in OBS
 document.querySelector('.h1-right').style.color='hsl('+(180-X1[1])+',100%,50%)'  //
 canvas.width=canvas.width; ctx.fillText(canvas.height, 700, 8); ctx.fillText(new Date(X1[0]*1000).toJSON().slice(11,16), 690, canvas.height)
@@ -34,7 +34,7 @@ ctx.stroke()
 function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
 
 var mutationObserver = new MutationObserver(function() {
- const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {hrs.push(tmp);manu();console.log(xavg/xind);if(upluri) upload(tmp.split(';')[1])}
+ const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {hrs.push(tmp);manu();if(upluri) upload(tmp.split(';')[1])}
 });
 
 mutationObserver.observe(output, {childList: true});
@@ -49,7 +49,6 @@ document.querySelector('input').onchange = function() { var reader=new FileReade
 function cv(that) {
  const lines = that.replace(/\r?\n$/,'').split(/\r?\n/);
  hrs=lines; manu()
- console.log(xavg/xind)
 }
 
 //if(sessionStorage.csv) cv(sessionStorage.csv)  //dbtocsv
