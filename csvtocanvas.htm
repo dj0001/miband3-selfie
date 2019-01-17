@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
+<head><title>&hearts; Monitor</title></head>
 <body>
 
-<header><h1><a href="https://github.com/dj0001/miband3-selfie" class="h1-right" style='color:#41c5f4;transition: color 1s'>HR</a></h1><button id="scanBtn" class="btn-scan">Scan</button></header>
+<header><h1><a href="https://github.com/dj0001/miband3-selfie" class="h1-right" style='color:#41c5f4;transition: color 1s'>&hearts;</a></h1><button id="scanBtn" class="btn-scan">Scan</button></header>
 <canvas id="myCanvas" width="720" height="120" style="border:1px solid #d3d3d3;"></canvas>
 <main style="display: none;"><a style="cursor: pointer;white-space: pre" id="output" download='pulse.csv'></a></main>
 
@@ -12,26 +13,28 @@
 var upluri=''  // './' edit here
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
-ctx.fillText(canvas.height, 700, 8)  //
 
-var X0, xavg=xind=0  //
+var hrs=[], xavg=xind=0  //X0
 
-function manu(item){
- const line = item.split(/;|\t/)
+function manu(){
+var X1=hrs[hrs.length-1].split(/;|\t/)
+document.querySelector('.h1-right').textContent=X1[1]  //crop in OBS
+document.querySelector('.h1-right').style.color='hsl('+(180-X1[1])+',100%,50%)'  //
+canvas.width=canvas.width; ctx.fillText(canvas.height, 700, 8); ctx.fillText(new Date(X1[0]*1000).toJSON().slice(11,16), 690, canvas.height)
+for(var i=hrs.length-1;i>=0;i--){
+ const line = hrs[i].split(/;|\t/)
  const y=line[location.search.slice(1)]||line[1]  //?4 row
- if(isNaN(y)) {canvas.title=y; return}  // 
- if(!X0) {X0=line[0];ctx.fillText(new Date(X0*1000).toJSON().slice(11,16), 0, canvas.height)};
- if(y!=255) ctx.lineTo((line[0]-X0)/(location.search=='?hrmStart'?1:60),canvas.height-1*y);
+ if(isNaN(y)) {canvas.title=y; continue}
+ if(y!=255) ctx.lineTo(canvas.width+(1*line[0]-X1[0])/(location.search=='?hrmStart'?1:60),canvas.height-1*y)
  xavg+=1*y; xind++
-
- document.querySelector('.h1-right').textContent=1*y  //OBS overlay
- document.querySelector('.h1-right').style.color='hsl('+(180-y)+',100%,50%)'  //
+}
+ctx.stroke()
 }
 
 function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
 
 var mutationObserver = new MutationObserver(function() {
- const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {manu(tmp);ctx.stroke();console.log(xavg/xind);if(upluri) upload(tmp.split(';')[1])}
+ const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {hrs.push(tmp);manu();console.log(xavg/xind);if(upluri) upload(tmp.split(';')[1])}
 });
 
 mutationObserver.observe(output, {childList: true});
@@ -45,8 +48,7 @@ document.querySelector('input').onchange = function() { var reader=new FileReade
 
 function cv(that) {
  const lines = that.replace(/\r?\n$/,'').split(/\r?\n/);
- lines.forEach(function(item){manu(item)})
- ctx.stroke();
+ hrs=lines; manu()
  console.log(xavg/xind)
 }
 
@@ -68,7 +70,7 @@ document.body.appendChild(scr)
 
 if(location.search=='?m') window.setInterval(function(){ //document.body.style.all='initial';  //?m monitor
  fetch('rate.txt').then(function(response) {response.text().then(function(text){
-  manu(Date.now()/1000+';'+text);ctx.stroke()  //document.body.innerHTML=text
+  hrs.push(Date.now()/1000+';'+text);manu()  //document.body.innerHTML=text
  })})
 }, 60000)
 </script>
