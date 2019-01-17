@@ -29,6 +29,7 @@ for(var i=hrs.length-1;i>=0;i--){
  xavg+=1*y
 }
 ctx.stroke(); ctx.fillText('\u2205'+(xavg/hrs.length).toFixed(), 0, 8)
+ctx.fillText(new Date((X1[0]-(location.search=='?hrmStart'?1:60)*canvas.width)*1000).toJSON().slice(11,16), 0, canvas.height)
 }
 
 function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
