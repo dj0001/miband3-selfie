@@ -37,7 +37,8 @@ if(mx<canvas.height-16) ctx.fillText(mx,700,canvas.height-mx)  //
 function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
 
 var mutationObserver = new MutationObserver(function() {
- const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {hrs.push(tmp);manu();if(upluri) upload(tmp.split(';')[1]);if(tmp.split(';')[1]>hrnoti) {hrnoti=Infinity;document.querySelector('.h1-right').dispatchEvent(event)}}
+ const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {hrs.push(tmp);manu();if(upluri) upload(tmp.split(';')[1]);
+  if(tmp.split(';')[1]>hrnoti && hrs[hrs.length-2].split(';')[1]<=hrnoti) document.querySelector('.h1-right').dispatchEvent(event)}
 });
 
 mutationObserver.observe(output, {childList: true});
