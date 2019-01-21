@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head><meta name="viewport" content="width=device-width,initial-scale=1"><title>&hearts; Monitor</title></head>
+<style>
+@keyframes example {  0% {border-color: transparent}  50% {border-color: white} 100% {border-color: transparent}}
+.h1-right {border:1px solid transparent;border-radius:50%;padding:1px;animation: example 0s infinite}
+</style>
 <body style='width:initial;box-shadow:initial'>
 
 <header><h1><a href="https://github.com/dj0001/miband3-selfie" class="h1-right" style='color:#41c5f4;transition: color 1s'>&hearts;</a></h1><button id="scanBtn" class="btn-scan">Scan</button></header>
@@ -39,6 +43,7 @@ function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);v
 var mutationObserver = new MutationObserver(function() {
  const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {hrs.push(tmp);manu();if(upluri) upload(tmp.split(';')[1]);
   if(tmp.split(';')[1]>hrnoti && hrs[hrs.length-2].split(';')[1]<=hrnoti) document.querySelector('.h1-right').dispatchEvent(event)}
+  document.querySelector('.h1-right').style.animationDuration=60/tmp.split(';')[1]+'s'  //
 });
 
 mutationObserver.observe(output, {childList: true});
