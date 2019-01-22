@@ -9,7 +9,7 @@ canvas {border:1px solid #d3d3d3;background:repeating-linear-gradient(to top,tra
 <body style='width:initial;box-shadow:initial'>
 
 <header><h1><a href="https://github.com/dj0001/miband3-selfie" class="h1-right" style='color:#41c5f4;transition: color 1s'>&hearts;</a></h1><button id="scanBtn" class="btn-scan">Scan</button></header>
-<canvas id="myCanvas" width="720" height="180" onclick="navigator.share({title:'\u2665',url:'?'+hrs.toString().replace(/,/g,'%0A')})"></canvas>
+<canvas id="myCanvas" width="720" height="180" onclick="navigator.share({title:'\u2665',url:'?'+hrs})"></canvas>
 <main style="display: none;"><a style="cursor: pointer;white-space: pre" id="output" download='pulse.csv'></a></main>
 
 <input type="file" id="upl"/><label for="upl">Optionally upload HR.csv</label>
@@ -42,7 +42,7 @@ if(mx<canvas.height-16) ctx.fillText(mx,700,canvas.height-mx)  //
 function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
 
 var mutationObserver = new MutationObserver(function() {
- const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {hrs.push(tmp);manu();if(upluri) upload(tmp.split(';')[1]);
+ const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {hrs.push(tmp.replace(' ',''));manu();if(upluri) upload(tmp.split(';')[1]);
   if(tmp.split(';')[1]>hrnoti && hrs[hrs.length-2].split(';')[1]<=hrnoti) document.querySelector('.h1-right').dispatchEvent(event)}
   document.querySelector('.h1-right').style.animationDuration=60/tmp.split(';')[1]+'s'  //
 });
@@ -82,7 +82,7 @@ if(location.search=='?m') window.setInterval(function(){ //document.body.style.a
   hrs.push(Date.now()/1000+';'+text);manu()  //document.body.innerHTML=text
  })})
 }, 60000)
-if(location.search.match(';')) cv(decodeURI(location.search.slice(1)))  //?1547519549;77%0A1547519551;74
+if(location.search.match(';')) cv(decodeURI(location.search.slice(1).replace(/,/g,'\n'))  //?1547519549;77,1547519551;74
 </script>
 <script src="webapp.bundle.js"></script>
 </body>
