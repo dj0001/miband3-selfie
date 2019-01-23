@@ -9,7 +9,7 @@ canvas {border:1px solid #d3d3d3;background:repeating-linear-gradient(to top,tra
 <body style='width:initial;box-shadow:initial'>
 
 <header><h1><a href="https://github.com/dj0001/miband3-selfie" class="h1-right" style='color:#41c5f4;transition: color 1s'>&hearts;</a></h1><button id="scanBtn" class="btn-scan">Scan</button></header>
-<canvas id="myCanvas" width="720" height="180" onclick="navigator.share({title:'\u2665',url:'?'+hrs})"></canvas>
+<canvas id="myCanvas" width="720" height="180" onclick="z=!z;manu(); navigator.share({title:'\u2665',url:'?'+hrs})"></canvas>
 <main style="display: none;"><a style="cursor: pointer;white-space: pre" id="output" download='pulse.csv'></a></main>
 
 <input type="file" id="upl"/><label for="upl">Optionally upload HR.csv</label>
@@ -19,7 +19,7 @@ var upluri='', hrnoti=Infinity  // './' edit here
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-var hrs=[]  //X0
+var hrs=[], z=location.search=='?hrmStart'
 
 function manu(){
 var X1=hrs[hrs.length-1].split(/;|\t/), xavg=0, mx=0
@@ -30,11 +30,11 @@ for(var i=hrs.length-1;i>=0;i--){
  var line = hrs[i].split(/;|\t/)
  const y=line[location.search.slice(1)]||line[1]  //?4 row
  if(isNaN(y)) {canvas.title=y; continue}
- var tmp=canvas.width+(1*line[0]-X1[0])/(location.search=='?hrmStart'?1:60); if(y!=255) ctx.lineTo(tmp,canvas.height-1*y)
+ var tmp=canvas.width+(1*line[0]-X1[0])/(z?1:60); if(y!=255) ctx.lineTo(tmp,canvas.height-1*y)
  xavg+=1*y; mx=Math.max(mx,y)
 }
 ctx.stroke(); ctx.fillText('\u2205'+(xavg/hrs.length).toFixed(), 0, 8)
-ctx.fillText(new Date((X1[0]-(location.search=='?hrmStart'?1:60)*canvas.width)*1000).toJSON().slice(11,16), 0, canvas.height)
+ctx.fillText(new Date((X1[0]-(z?1:60)*canvas.width)*1000).toJSON().slice(11,16), 0, canvas.height)
 if(1*line[0]) ctx.fillText(new Date(line[0]*1000).toJSON().slice(11,16), Math.min(tmp,690)-30, canvas.height)  //
 if(mx<canvas.height-16) ctx.fillText(mx,700,canvas.height-mx)  //
 }
