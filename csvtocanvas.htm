@@ -35,7 +35,7 @@ for(var i=hrs.length-1;i>=0;i--){
 }
 ctx.stroke(); ctx.fillText('\u2205'+(xavg/hrs.length).toFixed(), 0, 8)
 ctx.fillText(new Date((X1[0]-(z?1:60)*canvas.width)*1000).toJSON().slice(11,16), 0, canvas.height)
-if(1*line[0]) ctx.fillText(new Date(line[0]*1000).toJSON().slice(11,16), Math.min(tmp,690)-30, canvas.height)  //
+if(1*line[0]) ctx.fillText(new Date(line[0]*1000).toJSON().slice(11,16), Math.min(tmp,690)-30, canvas.height)  //5,16
 if(mx<canvas.height-16) ctx.fillText(mx,700,canvas.height-mx)  //
 }
 
