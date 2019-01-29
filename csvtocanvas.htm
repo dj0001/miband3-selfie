@@ -83,6 +83,10 @@ if(location.search=='?m') window.setInterval(function(){ //document.body.style.a
  })})
 }, 60000)
 if(location.search.match(/;|%/)) cv(decodeURIComponent(location.search.slice(1)).replace(/,/g,'\n'))  //?1547519549;77,1547519551;74
+
+function steps(stps){  //?steps
+if(hrs.length) {var X1=hrs[hrs.length-1].split(';'); hrs[hrs.length-1]=X1[0]+';'+60*(stps-X1[1])/(Date.now()/1000-X1[0])}  //steps/min
+hrs.push(Date.now()/1000+';'+stps); manu() }
 </script>
 <script src="webapp.bundle.js"></script>
 </body>
