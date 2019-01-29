@@ -50,7 +50,7 @@ var mutationObserver = new MutationObserver(function() {
 mutationObserver.observe(output, {childList: true});
 
 var event=new Event('contextmenu');if(location.search.slice(1)>=1) {window.setInterval(function(){document.querySelector('#scanBtn').dispatchEvent(event)}, location.search.slice(1)*60000)}  //?1 hr every 1 min
-output.onclick=function(){output.href='data:,'+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])}  //download
+output.onclick=function(){output.href='data:,'+hrs.toString().replace(/,/g,'%0A')}  //+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])
 
 document.querySelector('input').onchange = function() { var reader=new FileReader(); if(this.files[0].name.slice(-3)=='csv')
  {reader.onload=function(){cv(reader.result)};reader.readAsText(this.files[0])} else 
