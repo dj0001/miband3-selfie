@@ -7402,7 +7402,8 @@
                 await this.authenticate();
 
                 // Notifications should be enabled after auth
-                for (let char of ['hrm_data', 'event', 'raw_data']) {
+                let chars=['hrm_data', 'event', 'raw_data']; if(location.search=='?steps') chars.push('steps')  //dj
+                for (let char of chars) {
                   await this.startNotificationsFor(char);
                 }
               }
@@ -7620,6 +7621,10 @@
                 } else if (event.target.uuid === this.char.hrm_data.uuid) {
                   let rate = value.readUInt16BE(0);
                   this.emit('heart_rate', rate);
+                            
+                } else if (event.target.uuid === this.char.steps.uuid) {  //dj
+                  let stps = value.readUInt16LE(1);
+                  steps(stps);
 
                 } else if (event.target.uuid === this.char.event.uuid) {
                   const cmd = value.toString('hex');
