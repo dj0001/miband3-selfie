@@ -65,6 +65,7 @@ pp.oncontextmenu=function(e){e.preventDefault();if(ls) document.querySelector('o
 var event=new Event('contextmenu'), p0  //smartalarm
 var mutationObserver = new MutationObserver(function() {const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {if(!p0) p0=tmp.split(';')[1]; else if(tmp.split(';')[1]>p0) document.querySelector('.h1-right').dispatchEvent(event)} });
 mutationObserver.observe(output, {childList: true});
+if(ls.match('Metronome')) {var bpm=100;audio.playbackRate=bpm/96;audio.loop=true}  //?https://upload.wikimedia.org/wikipedia/commons/c/c6/Sound_Classic_Metronome_96.ogg
 navigator.getWakeLock("system").then(function(wakeLock) { var request = wakeLock.createRequest(); console.log(wakeLock.active); });  //screen, flag
 </script>
 
