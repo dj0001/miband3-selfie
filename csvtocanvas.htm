@@ -22,7 +22,7 @@ var ctx = canvas.getContext("2d");
 var hrs=[], z=location.search=='?hrmStart'
 
 function manu(){
-var X1=hrs[hrs.length-1].split(/;|\t/), xavg=0, mx=0
+var X1=hrs[hrs.length-1].split(/;|\t/), mx=0, s=0
 document.querySelector('.h1-right').textContent=1*X1[1]  //crop in OBS
 document.querySelector('.h1-right').style.color='hsl('+(180-X1[1])+',100%,50%)'  //
 canvas.width=canvas.width; ctx.fillText(canvas.height, 700, 8); ctx.fillText(new Date(X1[0]*1000).toJSON().slice(11,16), 690, canvas.height)
@@ -31,9 +31,9 @@ for(var i=hrs.length-1;i>=0;i--){
  const y=line[location.search.slice(1)]||line[1]  //?4 row
  if(isNaN(y)) {canvas.title=y; continue}
  var tmp=canvas.width+(1*line[0]-X1[0])/(z?1:60); if(y!=255) ctx.lineTo(tmp,canvas.height-1*y)
- xavg+=1*y; mx=Math.max(mx,y)
+ mx=Math.max(mx,y); if(hrs[i+1]) s+=y*(hrs[i+1].split(/;|\t/)[0]-line[0])/60
 }
-ctx.stroke(); ctx.fillText('\u2205'+(xavg/hrs.length).toFixed(), 0, 8)
+ctx.stroke(); if(1*line[0]) ctx.fillText('\u2205'+(s/(X1[0]-line[0])*60).toFixed(), 0, 8)  //avg
 ctx.fillText(new Date((X1[0]-(z?1:60)*canvas.width)*1000).toJSON().slice(11,16), 0, canvas.height)
 if(1*line[0]) ctx.fillText(new Date(line[0]*1000).toJSON().slice(11,16), Math.min(tmp,690)-30, canvas.height)  //5,16
 if(mx<canvas.height-16) ctx.fillText(mx,700,canvas.height-mx)  //
