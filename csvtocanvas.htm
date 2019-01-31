@@ -31,7 +31,7 @@ for(var i=hrs.length-1;i>=0;i--){
  const y=line[location.search.slice(1)]||line[1]  //?4 row
  if(isNaN(y)) {canvas.title=y; continue}
  var tmp=canvas.width+(1*line[0]-X1[0])/(z?1:60); if(y!=255) ctx.lineTo(tmp,canvas.height-1*y)
- mx=Math.max(mx,y); if(hrs[i+1]) s+=y*(hrs[i+1].split(/;|\t/)[0]-line[0])/60
+ if(hrs[i+1]) {mx=Math.max(mx,y); s+=y*(hrs[i+1].split(/;|\t/)[0]-line[0])/60}
 }
 ctx.stroke(); if(1*line[0]) ctx.fillText('\u2205'+(s/(X1[0]-line[0])*60).toFixed(), 0, 8)  //avg
 ctx.fillText(new Date((X1[0]-(z?1:60)*canvas.width)*1000).toJSON().slice(11,16), 0, canvas.height)
