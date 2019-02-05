@@ -77,12 +77,12 @@ scr.onload=function(){
 document.body.appendChild(scr)
 }
 
-if(location.search=='?m') window.setInterval(function(){ //document.body.style.all='initial';  //?m monitor
- fetch('rate.txt').then(function(response) {response.text().then(function(text){
-  hrs.push(Date.now()/1000+';'+text);manu()  //document.body.innerHTML=text
+var ls=location.search; if (ls.slice(-4,-3)=='.') window.setInterval(function(){ //document.body.style.all='initial';  //?rate.txt monitor
+ fetch(ls.slice(1)).then(function(response) {response.text().then(function(text){
+  if(ls.slice(-4)=='.txt') {hrs.push(Date.now()/1000+';'+text);manu()} else cv(text)  //document.body.innerHTML=text
  })})
 }, 60000)
-if(location.search.match(/;|%/)) cv(decodeURIComponent(location.search.slice(1)).replace(/,/g,'\n'))  //?1547519549;77,1547519551;74
+if(ls.match(/;|%/)) cv(decodeURIComponent(ls.slice(1)).replace(/,/g,'\n'))  //?1547519549;77,1547519551;74
 
 function steps(stps){  //?steps
 if(hrs.length) {var X1=hrs[hrs.length-1].split(';'); var dt=Date.now()/1000-X1[0];if(dt<0.1) return; hrs[hrs.length-1]=X1[0]+';'+60*(stps-X1[1])/dt; manu()}  //steps/min
