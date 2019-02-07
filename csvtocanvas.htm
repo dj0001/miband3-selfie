@@ -30,7 +30,7 @@ for(var i=hrs.length-1;i>=0;i--){
  var line = hrs[i].split(/;|\t/)
  const y=line[location.search.slice(1)]||line[1]  //?4 row
  if(isNaN(y)) {canvas.title=y; continue}
- var tmp=canvas.width+(1*line[0]-X1[0])/(z?1:60); if(bar) ctx.moveTo(tmp,canvas.height); if(y!=255) ctx.lineTo(tmp,canvas.height-1*y)
+ var tmp=canvas.width+(1*line[0]-X1[0])/(z?1:60);if(tmp<0) break; if(bar) ctx.moveTo(tmp,canvas.height); if(y!=255) ctx.lineTo(tmp,canvas.height-1*y)
  if(hrs[i+1]) {mx=Math.max(mx,y); var dt=hrs[i+1].split(/;|\t/)[0]-line[0]; s+=y*dt/60; if(y>=30) a+=dt}
 }
 ctx.stroke(); if(1*line[0]) ctx.fillText('\u2205'+(s/(X1[0]-line[0])*60).toFixed(), 0, 8)  //avg
