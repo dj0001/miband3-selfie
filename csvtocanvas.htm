@@ -9,7 +9,7 @@ canvas {border:1px solid #d3d3d3;background:repeating-linear-gradient(to top,tra
 <body style='width:initial;box-shadow:initial'>
 
 <header><h1><a href="https://github.com/dj0001/miband3-selfie" class="h1-right" style='color:#41c5f4;transition: color 1s'>&hearts;</a></h1><button id="scanBtn" class="btn-scan">Scan</button></header>
-<canvas id="myCanvas" width="720" height="180" onclick="z=!z;manu(); navigator.share({title:'\u2665',url:'?'+hrs})"></canvas>
+<canvas id="myCanvas" width="720" height="180" onclick="if(event.shiftKey) j+=720; else z=!z; manu(); navigator.share({title:'\u2665',url:'?'+hrs})"></canvas>
 <main style="display: none;"><a style="cursor: pointer;white-space: pre" id="output" download='pulse.csv'></a></main>
 
 <input type="file" id="upl"/><label for="upl">Optionally upload HR.csv</label>
@@ -19,10 +19,10 @@ var upluri='', hrnoti=Infinity, bar=false  // './' edit here
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-var hrs=[], z=location.search=='?hrmStart'
+var hrs=[], z=location.search=='?hrmStart', j=0
 
 function manu(){
-var X1=hrs[hrs.length-1].split(/;|\t/), mx=0, s=0, a=0
+var X1=hrs[hrs.length-1-j].split(/;|\t/), mx=0, s=0, a=0
 document.querySelector('.h1-right').textContent=1*X1[1]  //crop in OBS
 document.querySelector('.h1-right').style.color='hsl('+(180-X1[1])+',100%,50%)'  //
 canvas.width=canvas.width; ctx.fillText(canvas.height, 700, 8); ctx.fillText(new Date(X1[0]*1000).toJSON().slice(11,16), 690, canvas.height)
