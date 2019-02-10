@@ -19,7 +19,7 @@ var upluri='', hrnoti=Infinity, bar=false  // './' edit here
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-var hrs=[], z=location.search=='?hrmStart', j=0
+var hrs=[], z=location.search=='?hrmStart', j=0, ls=location.search
 
 function manu(){
 var X1=hrs[hrs.length-1-j].split(/;|\t/), mx=0, s=0, a=0
@@ -49,7 +49,8 @@ var mutationObserver = new MutationObserver(function() {
 
 mutationObserver.observe(output, {childList: true});
 
-var event=new Event('contextmenu');if(location.search.slice(1)>=1) {window.setInterval(function(){document.querySelector('#scanBtn').dispatchEvent(event)}, location.search.slice(1)*60000)}  //?1 hr every 1 min
+if(ls=='?kiox') {ls='?1'; navigator.geolocation.watchPosition(function(pos) {scanBtn.innerHTML=Math.round(pos.coords.speed*3.6)+' <sup>km/h</sup>'}, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})}
+var event=new Event('contextmenu');if(ls.slice(1)>=1) {window.setInterval(function(){scanBtn.dispatchEvent(event)}, ls.slice(1)*60000)}  //?1 hr every 1 min
 output.onclick=function(){output.href='data:,'+hrs.join('%0A')}  //+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])
 
 document.querySelector('input').onchange = function() { var reader=new FileReader(); if(this.files[0].name.slice(-3)=='csv')
@@ -77,7 +78,7 @@ scr.onload=function(){
 document.body.appendChild(scr)
 }
 
-var ls=location.search; if (ls.slice(-4,-3)=='.') window.setInterval(function(){ //document.body.style.all='initial';  //?rate.txt monitor
+if (ls.slice(-4,-3)=='.') window.setInterval(function(){ //document.body.style.all='initial';  //?rate.txt monitor
  fetch(ls.slice(1)).then(function(response) {response.text().then(function(text){
   if(ls.slice(-4)=='.txt') {hrs.push(Date.now()/1000+';'+text);manu()} else cv(text)  //document.body.innerHTML=text
  })})
