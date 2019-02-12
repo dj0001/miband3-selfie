@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/png" href="favicon.png" /><title>Kiox display</title>
+<style>
+body {font-family:Helvetica; background:#535353; color: white}
+h3 {color:#00baf2}
+h1, h3 {text-align: center}
+h4 {text-align: right}
+</style></head>
+<body >
+
+<h4 id="unit"></h4>
+<h1 id="speed">25</h1>
+<h3>Speed</h3>
+<hr>
+<h4>bpm</h4>
+<h1 id="scanBtnn">&#x16d2;</h1>
+<h3>Heartrate</h3>
+
+<script>
+var imp=true  //edit here
+unit.onclick=function(){imp=!imp; unit.textContent=imp?'km/h':'mph'}; imp=!imp;unit.click()
+navigator.geolocation.watchPosition(function(pos) {speed.innerHTML=Math.round(pos.coords.speed*(imp?3.6:2.237))}, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})
+</script>
+<script src="webapp.bundle.js"></script>
+<script>
+            const bluetooth = navigator.bluetooth;
+
+           document.querySelector('#scanBtnn').addEventListener('click', scann);
+
+            async function scann() {
+              if (!bluetooth) {
+                console.log('WebBluetooth is not supported by your browser!');
+                return;
+              }
+
+              try {
+                console.log('Requesting Bluetooth Device...'); scanBtnn.textContent='...'
+                const device = await bluetooth.requestDevice({
+                  filters: [
+                    { services: [ miband.advertisementService ] }
+                  ],
+                  optionalServices: miband.optionalServices
+                });
+
+                device.addEventListener('gattserverdisconnected', () => {
+                  console.log('Device disconnected');
+                });
+
+                await device.gatt.disconnect();
+
+                console.log('Connecting to the device...');
+                const server = await device.gatt.connect();
+                console.log('Connected');
+
+                let miband$$1 = new miband(server);
+
+                await miband$$1.init();
+
+                window.setInterval(function(){testn(miband$$1)}, 60000)
+
+              } catch(error) {
+                console.log('Argh!', error);
+              }
+            }
+            
+ async function testn(miband) { scanBtnn.textContent=await miband.hrmRead() }
+</script>
+</body>
+</html>
