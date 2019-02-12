@@ -18,4 +18,4 @@ then go to devicesearch (under More) on miband, longpress, and theMediaDevice sh
 03.01. notify and pomodoro [timer](https://dj0001.github.io/miband3-selfie/notify.htm) ([alarmclock](https://dj0001.github.io/miband3-selfie/notify.htm?https://upload.wikimedia.org/wikipedia/commons/b/bc/Alarmclock-mechanical.ogg), [stoppwatch](https://dj0001.github.io/miband3-selfie/notify.htm?00), [worldclock](https://dj0001.github.io/miband3-selfie/notify.htm?0))  
 08.01. smart alarm (Scan)  
 14.01. continuous [heartrate](https://dj0001.github.io/miband3-selfie/csvtocanvas.htm?hrmStart) Monitor and 29.01. [steps](https://dj0001.github.io/miband3-selfie/csvtocanvas.htm?steps) and 10.02. [cycling](https://dj0001.github.io/miband3-selfie/csvtocanvas.htm?kiox)  
-12.02. [Kiox](https://dj0001.github.io/miband3-selfie/kiox.htm)
+12.02. [Kiox](https://dj0001.github.io/miband3-selfie/kiox.htm) display
