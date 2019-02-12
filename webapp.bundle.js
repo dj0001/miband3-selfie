@@ -1,3 +1,4 @@
+var miband;  //dj 
 (function () {  //
             'use strict';
 
