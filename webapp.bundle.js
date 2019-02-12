@@ -1,17 +1,7 @@
 (function () {  //
             'use strict';
 
-            function __$styleInject(css) {
-                if (!css) return;
-
-                if (typeof window == 'undefined') return;
-                var style = document.createElement('style');
-                style.setAttribute('media', 'screen');
-
-                style.innerHTML = css;
-                document.head.appendChild(style);
-                return css;
-            }
+//moved dj
 
             var global$1 = (typeof global !== "undefined" ? global :
                         typeof self !== "undefined" ? self :
@@ -7646,6 +7636,10 @@
 
             var miband = MiBand;
 
+}());  //
+
+(function () { if(!document.querySelector('#scanBtn')) return  //
+
             function delay(ms) {
               return new Promise(resolve => setTimeout(resolve, ms))
             }
@@ -7771,6 +7765,18 @@ if(location.search!='?hrmStart') {
  async function test_hrmStop(miband, log) {
               await miband.hrmStop()
  }
+
+            function __$styleInject(css) {
+                if (!css) return;
+
+                if (typeof window == 'undefined') return;
+                var style = document.createElement('style');
+                style.setAttribute('media', 'screen');
+
+                style.innerHTML = css;
+                document.head.appendChild(style);
+                return css;
+            }
 
 }());  //
 //# sourceMappingURL=webapp.bundle.js.map
