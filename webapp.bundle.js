@@ -7635,7 +7635,7 @@ var miband;  //dj
               }
             }
 
-            var miband = MiBand;
+            miband = MiBand;  //var 
 
 }());  //
 
