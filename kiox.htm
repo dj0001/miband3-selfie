@@ -11,16 +11,22 @@ h4 {text-align: right}
 
 <h4 id="unit"></h4>
 <h1 id="speed">25</h1>
-<h3>Speed</h3>
+<h3 id="page">Speed</h3>
 <hr>
 <h4>bpm</h4>
 <h1 id="scanBtnn">&#x16d2;</h1>
 <h3>Heartrate</h3>
 
 <script>
-var imp=true  //edit here
-unit.onclick=function(){imp=!imp; unit.textContent=imp?'km/h':'mph'}; imp=!imp;unit.click()
-navigator.geolocation.watchPosition(function(pos) {speed.innerHTML=Math.round(pos.coords.speed*(imp?3.6:2.237))}, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})
+var imp=true, speedo=true  //edit here
+var time0=performance.now(), dst=0
+unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}; imp=!imp;unit.click()
+page.onclick=function(){speedo=!speedo; this.textContent=speedo?'Speed':'Distance'}; speedo=!speedo;page.click()
+
+navigator.geolocation.watchPosition(function(pos) {
+ var time=performance.now(); dst+=pos.coords.speed*(time-time0)/1000/1000;
+ speed.innerHTML=speedo? Math.round(pos.coords.speed*(imp?3.6:2.237)) : (dst*(imp?1:0.621)).toFixed(1)
+ }, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})
 </script>
 <script src="webapp.bundle.js"></script>
 <script>
