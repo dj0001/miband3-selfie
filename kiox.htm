@@ -20,8 +20,8 @@ h4 {text-align: right}
 <script>
 var imp=true, speedo=true  //edit here
 var time0=performance.now(), dst=0
-unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}; imp=!imp;unit.click()
-page.onclick=function(){speedo=!speedo; this.textContent=speedo?'Speed':'Distance'}; speedo=!speedo;page.click()
+unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}
+page.onclick=function(){speedo=!speedo; this.textContent=speedo?'Speed':'Distance'; imp=!imp;unit.click()}; speedo=!speedo;page.click()
 
 navigator.geolocation.watchPosition(function(pos) {
  var time=performance.now(); dst+=pos.coords.speed*(time-time0)/1000/1000; time0=time
@@ -64,6 +64,7 @@ navigator.geolocation.watchPosition(function(pos) {
                 await miband$$1.init();
 
                 testn(miband$$1); window.setInterval(function(){testn(miband$$1)}, 60000)
+                navigator.getWakeLock("screen").then(function(wakeLock) { var request = wakeLock.createRequest(); console.log(wakeLock.active); });  //system, flag
 
               } catch(error) {
                 console.log('Argh!', error);
