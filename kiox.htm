@@ -24,7 +24,7 @@ unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':
 page.onclick=function(){speedo=!speedo; this.textContent=speedo?'Speed':'Distance'}; speedo=!speedo;page.click()
 
 navigator.geolocation.watchPosition(function(pos) {
- var time=performance.now(); dst+=pos.coords.speed*(time-time0)/1000/1000;
+ var time=performance.now(); dst+=pos.coords.speed*(time-time0)/1000/1000; time0=time
  speed.innerHTML=speedo? Math.round(pos.coords.speed*(imp?3.6:2.237)) : (dst*(imp?1:0.621)).toFixed(1)
  }, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})
 </script>
