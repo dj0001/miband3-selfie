@@ -57,7 +57,7 @@ navigator.geolocation.watchPosition(function(pos) {speed.innerHTML=Math.round(po
 
                 await miband$$1.init();
 
-                await testn(miband$$1); window.setInterval(function(){testn(miband$$1)}, 60000)
+                testn(miband$$1); window.setInterval(function(){testn(miband$$1)}, 60000)
 
               } catch(error) {
                 console.log('Argh!', error);
