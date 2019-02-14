@@ -6,10 +6,11 @@ body {font-family:Helvetica; background:#535353; color: white; height: 100vh; ov
 h3 {color:#00baf2}
 h1, h3 {text-align: center}
 h4 {text-align: right}
+meter+span {float:right;font-weight: bold}
 </style></head>
 <body >
 
-<h4 id="unit"></h4>
+<meter></meter><span id="unit"></span>  <!-- high=0.5 -->
 <h1 id="speed">25</h1>
 <h3 id="page">Speed</h3>
 <hr>
@@ -19,13 +20,14 @@ h4 {text-align: right}
 
 <script>
 var imp=true, speedo=true  //edit here
-var time0=performance.now(), dst=0
+var time1=time0=performance.now(), dst=0
 unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}
 page.onclick=function(){speedo=!speedo; this.textContent=speedo?'Speed':'Distance'; imp=!imp;unit.click()}; speedo=!speedo;page.click()
 
 navigator.geolocation.watchPosition(function(pos) {
  var time=performance.now(); dst+=pos.coords.speed*(time-time0)/1000/1000; time0=time
  speed.innerHTML=speedo? Math.round(pos.coords.speed*(imp?3.6:2.237)) : (dst*(imp?1:0.621)).toFixed(1)
+ document.querySelector('meter').value=pos.coords.speed/(2*dst/(time0-time1)*1000*1000)  //speed in comparision with average speed (middle) 
  }, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})
 </script>
 <script src="webapp.bundle.js"></script>
