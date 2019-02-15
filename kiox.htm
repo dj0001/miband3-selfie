@@ -20,13 +20,14 @@ meter+span {float:right;font-weight: bold}
 
 <script>
 var imp=true, speedo=true, col=true  //edit here
-var time1=time0=performance.now(), dst=0
+var time1,time0,speed0, dst=0
 if(col) document.querySelector('meter').high=0.5
 unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}
 page.onclick=function(){speedo=!speedo; this.textContent=speedo?'Speed':'Distance'; imp=!imp;unit.click()}; speedo=!speedo;page.click()
 
 navigator.geolocation.watchPosition(function(pos) {
- var time=performance.now(); dst+=pos.coords.speed*(time-time0)/1000/1000; time0=time
+ if(time0) dst+=speed0*(pos.timestamp-time0)/1000/1000
+ time0=pos.timestamp; speed0=pos.coords.speed; time1=time1||time0
  speed.innerHTML=speedo? Math.round(pos.coords.speed*(imp?3.6:2.237)) : (dst*(imp?1:0.621)).toFixed(1)
  if(location.search=='?alt') unit.textContent=pos.coords.altitude.toFixed()+' m'  //?alt
  document.querySelector('meter').value=pos.coords.speed/(2*dst/(time0-time1)*1000*1000)  //speed in comparision with average speed (middle) 
