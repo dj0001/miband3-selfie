@@ -40,7 +40,8 @@ navigator.geolocation.watchPosition(function(pos) {
 
 if(location.search=='?ambi') {  //flag  //document.body.classList.toggle("light")
 const sensor = new AmbientLightSensor();
-sensor.onreading = () => scanBtnn.textContent=sensor.illuminance; }  //?ambi test ambilight 
+sensor.onreading = () => scanBtnn.textContent=sensor.illuminance;
+sensor.start() }  //?ambi test ambilight 
 </script>
 <script src="webapp.bundle.js"></script>
 <script>
