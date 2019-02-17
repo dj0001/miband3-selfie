@@ -7,6 +7,7 @@ h3 {color:#00baf2}
 h1, h3 {text-align: center}
 h4 {text-align: right}
 meter+span {float:right;font-weight: bold}
+.light {background:white; color:#535353}
 </style></head>
 <body >
 
@@ -24,6 +25,7 @@ var time1,time0,speed0, dst=0, mx=0
 if(col) document.querySelector('meter').low=0.51
 unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}
 page.onclick=function(){speedo=!speedo; this.textContent=speedo?'Speed':'Distance'; imp=!imp;unit.click()}; speedo=!speedo;page.click()
+if(location.search=='?bright') document.body.classList.toggle("light")  //?bright theme
 
 navigator.geolocation.watchPosition(function(pos) {
  if(time0) dst+=speed0*(pos.timestamp-time0)/1000/1000
