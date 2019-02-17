@@ -37,6 +37,10 @@ navigator.geolocation.watchPosition(function(pos) {
  var avg=dst/(time0-time1)*1000*1000; document.querySelector('meter').value=pos.coords.speed/(2*avg)  //speed in comparision with average speed (middle)
  if(col) document.querySelector('meter').high=mx/(2*avg); mx=Math.max(mx,speed0)
  }, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})
+
+if(location.search=='?ambi') {  //flag  //document.body.classList.toggle("light")
+const sensor = new AmbientLightSensor();
+sensor.onreading = () => scanBtnn.textContent=sensor.illuminance; }  //?ambi test ambilight 
 </script>
 <script src="webapp.bundle.js"></script>
 <script>
