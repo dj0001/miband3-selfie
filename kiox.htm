@@ -6,15 +6,15 @@ body {font-family:Helvetica; background:#535353; color: white; height: 100vh; ov
 h3 {color:#00baf2}
 h1, h3 {text-align: center}
 h4 {text-align: right}
-meter+span {float:right;font-weight: bold}
+#unit {float:right;font-weight: bold}
 .light {background:white; color:#535353}
 meter::-webkit-meter-bar {background: linear-gradient(to right, #ddd 49%, black 50%, #ddd 51%)}
 </style></head>
 <body >
 
-<meter></meter><span id="unit"></span>
+<a href="https://github.com/dj0001/miband3-selfie"><meter></meter></a><span id="unit"></span>
 <h1 id="speed">25</h1>
-<h3 id="page">Speed</h3>
+<h3 id="shot">Speed</h3>
 <hr>
 <h4>bpm</h4>
 <h1 id="scanBtnn">&#x16d2;</h1>
@@ -25,7 +25,7 @@ var imp=true, speedo=true, col=true  //edit here
 var time1,time0,speed0, dst=0, mx=0
 if(col) document.querySelector('meter').low=0.51
 unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}
-page.onclick=function(){speedo=!speedo; this.textContent=speedo?'Speed':'Distance'; imp=!imp;unit.click()}; speedo=!speedo;page.click()
+shot.onclick=function(){speedo=!speedo; this.textContent=speedo?'Speed':'Distance'; imp=!imp;unit.click()}; speedo=!speedo;shot.click()  //device search
 if(location.search=='?bright') document.body.classList.toggle("light")  //?bright theme
 
 navigator.geolocation.watchPosition(function(pos) {
