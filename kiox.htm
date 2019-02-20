@@ -22,7 +22,7 @@ meter::-webkit-meter-bar {background: linear-gradient(to right, #ddd 49%, black 
 
 <script>
 var imp=true, speedo=true, col=true  //edit here
-var time1,time0,speed0, dst=0, mx=0
+var time1,time0,speed0, dst=0, mx=0, alt0
 if(col) document.querySelector('meter').low=0.51
 unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}
 shot.onclick=function(){speedo=!speedo; this.textContent=speedo?'Speed':'Distance'; imp=!imp;unit.click()}; speedo=!speedo;shot.click()  //device search
@@ -30,7 +30,8 @@ if(location.search=='?bright') document.body.classList.toggle("light")  //?brigh
 
 navigator.geolocation.watchPosition(function(pos) {
  if(time0) dst+=speed0*(pos.timestamp-time0)/1000/1000
- time0=pos.timestamp; speed0=pos.coords.speed; time1=time1||time0
+ if(location.search=='?rise') {unit.textContent='\u2192'; unit.style.transform='rotate('+-(90-Math.acos((pos.coords.altitude-alt0)/(speed0*(pos.timestamp-time0)/1000))/Math.PI*180)+'deg)'}
+ time0=pos.timestamp; speed0=pos.coords.speed; time1=time1||time0; alt0=pos.coords.altitude
  var tmp=(pos.coords.speed*(imp?3.6:2.237)).toFixed(1).split('.'); speed.innerHTML=speedo? tmp[0]+'.<small>'+tmp[1]+'</small>' : (dst*(imp?1:0.621)).toFixed(1)
  if(location.search=='?alt') unit.textContent=pos.coords.altitude.toFixed()+' m'  //?alt
  if(location.search=='?head') {unit.textContent='\u2191';unit.style.transform='rotate('+-pos.coords.heading+'deg)'}  //?head compass
