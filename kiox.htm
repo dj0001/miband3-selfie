@@ -36,7 +36,6 @@ navigator.geolocation.watchPosition(function(pos) {
  if(location.search=='?alt') unit.textContent=pos.coords.altitude.toFixed()+' m'  //?alt
  if(location.search=='?head') {unit.textContent='\u2191';unit.style.transform='rotate('+-pos.coords.heading+'deg)'}  //?head compass
  if(location.search=='?trip') unit.textContent=new Date(time0-time1).toJSON().slice(11,16)  //?trip time
- if(location.search=='?test') scanBtnn.innerHTML+=speed0+'<br>'
  avg=dst/(time0-time1)*1000*1000; document.querySelector('meter').value=pos.coords.speed/(2*avg)  //speed in comparision with average speed (middle)
  if(col) document.querySelector('meter').high=mx/(2*avg); mx=Math.max(mx,speed0)
  }, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})
