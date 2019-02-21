@@ -32,7 +32,7 @@ speed.oncontextmenu=function(){document.querySelector("a[download]").href="data:
 if(location.search=='?bright') document.body.classList.toggle("light")  //?bright theme
 
 navigator.geolocation.watchPosition(function(pos) {
- if(pos.coords.speed || speed0 ||location.search=='?test') gpx += '<trkpt lat="' + pos.coords.latitude + '" lon="' + pos.coords.longitude + '"></trkpt>%0D%0A'
+ if(pos.coords.speed || speed0) gpx += '<trkpt lat="' + pos.coords.latitude + '" lon="' + pos.coords.longitude + '"></trkpt>%0D%0A'
  if(time0) dst+=speed0*(pos.timestamp-time0)/1000/1000
  time0=pos.timestamp; speed0=pos.coords.speed; time1=time1||time0
  var tmp=(pos.coords.speed*(imp?3.6:2.237)).toFixed(1).split('.'); speed.innerHTML=speedo? tmp[0]+'.<small>'+tmp[1]+'</small>' : (dst*(imp?1:0.621)).toFixed(1)
