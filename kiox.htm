@@ -26,7 +26,7 @@ var time1,time0,speed0, dst=0, mx=0, avg
 if(col) document.querySelector('meter').low=0.51
 unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}
 shot.onclick=function(){speedo=!speedo; this.textContent=speedo?'Speed':'Distance'; imp=!imp;unit.click()}; speedo=!speedo;shot.click()  //device search
-speed.onclick=function(){this.textContent='\u2205 '+avg.toFixed()}
+speed.onclick=function(){this.textContent='\u2205 '+avg.toFixed(1)}
 if(location.search=='?bright') document.body.classList.toggle("light")  //?bright theme
 
 navigator.geolocation.watchPosition(function(pos) {
