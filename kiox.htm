@@ -22,14 +22,14 @@ meter::-webkit-meter-bar {background: linear-gradient(to right, #ddd 49%, black 
 
 <script>
 var imp=true, speedo=true, col=true  //edit here
-var time1,time0,speed0, dst=0, mx=0, avg
+var time1,time0,speed0, dst=0, mx=0, avg, ls=location.search
 var gpx = '<?xml version="1.0" encoding="UTF-8"?>%0D%0A<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="dj" version="1.1"><trk><name>test</name><trkseg>%0D%0A'
 if(col) document.querySelector('meter').low=0.51
 unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}
 shot.onclick=function(){speedo=!speedo; this.textContent=speedo?'Speed':'Distance'; imp=!imp;unit.click()}; speedo=!speedo;shot.click()  //device search
 speed.onclick=function(){this.textContent='\u2205 '+avg.toFixed(1)}
 speed.oncontextmenu=function(){document.querySelector("a[download]").href="data:application/gpx+xml,"+gpx+"</trkseg></trk></gpx>"}
-if(location.search=='?bright') document.body.classList.toggle("light")  //?bright theme
+if(ls=='?bright') document.body.classList.toggle("light")  //?bright theme
 
 navigator.geolocation.watchPosition(function(pos) {
  var hr=1*scanBtnn.textContent||''; if(hr) hr='<gpxtpx:TrackPointExtension><gpxtpx:hr>'+hr+'</gpxtpx:hr></gpxtpx:TrackPointExtension>'
@@ -37,14 +37,14 @@ navigator.geolocation.watchPosition(function(pos) {
  if(time0) dst+=speed0*(pos.timestamp-time0)/1000/1000
  time0=pos.timestamp; speed0=pos.coords.speed; time1=time1||time0
  var tmp=(pos.coords.speed*(imp?3.6:2.237)).toFixed(1).split('.'); speed.innerHTML=speedo? tmp[0]+'.<small>'+tmp[1]+'</small>' : (dst*(imp?1:0.621)).toFixed(1)
- if(location.search=='?alt') unit.textContent=pos.coords.altitude.toFixed()+' m'  //?alt
- if(location.search=='?head') {unit.textContent='\u2191';unit.style.transform='rotate('+-pos.coords.heading+'deg)'}  //?head compass
- if(location.search=='?trip') unit.textContent=new Date(time0-time1).toJSON().slice(11,16)  //?trip time
+ if(ls=='?alt') unit.textContent=pos.coords.altitude.toFixed()+' m'  //?alt
+ if(ls=='?head') {unit.textContent='\u2191';unit.style.transform='rotate('+-pos.coords.heading+'deg)'}  //?head compass
+ if(ls=='?trip') unit.textContent=new Date(time0-time1).toJSON().slice(11,16)  //?trip time
  avg=dst/(time0-time1)*1000*1000; document.querySelector('meter').value=pos.coords.speed/(2*avg)  //speed in comparision with average speed (middle)
  if(col) document.querySelector('meter').high=mx/(2*avg); mx=Math.max(mx,speed0)
  }, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})
 
-if(location.search=='?ambi') { const sensor = new AmbientLightSensor();
+if(ls=='?ambi') { const sensor = new AmbientLightSensor();
  sensor.onreading = () => {if (sensor.illuminance>10) document.body.classList.add("light"); else document.body.classList.remove("light")}
  sensor.start() }  //flag
 </script>
