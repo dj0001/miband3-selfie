@@ -53,11 +53,12 @@ if(ls=='?kiox') {ls='?1'; navigator.geolocation.watchPosition(function(pos) {sca
 var event=new Event('contextmenu');if(ls.slice(1)>=1) {window.setInterval(function(){scanBtn.dispatchEvent(event)}, ls.slice(1)*60000)}  //?1 hr every 1 min
 output.onclick=function(){output.href='data:,'+hrs.join('%0A')}  //+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])
 
-document.querySelector('input').onchange = function() { var reader=new FileReader(); if(this.files[0].name.slice(-3)=='csv')
+document.querySelector('input').onchange = function() { var reader=new FileReader(); if(this.files[0].name.match(/csv$|gpx$/))
  {reader.onload=function(){cv(reader.result)};reader.readAsText(this.files[0])} else 
  {reader.onload=function(){db(reader.result)};reader.readAsArrayBuffer(this.files[0])} }
 
 function cv(that) {
+ if(that.match('<gpx')) {that=that.replace(/.*?<time>(.*?)<.*?<gpxtpx:hr>(.*?)<.*/g, function(m, p1, p2){return new Date(p1).getTime()/1000+';'+p2}).replace(/<.*\n?/g,'')}
  const lines = that.replace(/\r?\n$/,'').split(/\r?\n/);
  hrs=lines; manu()
 }
