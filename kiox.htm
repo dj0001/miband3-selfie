@@ -24,7 +24,7 @@ meter::-webkit-meter-bar {background: linear-gradient(to right, #ddd 49%, black 
 var imp=true, speedo=true, col=true  //edit here
 var time1,time0,speed0, dst=0, mx=0, avg, ls=location.search
 function _(i18,lang) { lang=lang||navigator.language.split('-')[0]
- var locales={en:['Heartrate','Speed','Distance'], es:['ritmo cardiaco','velocidad','distancia']}; locales.de=['Hertzrate','Geschwindigkeit','Distanz'];
+ var locales={en:['Heartrate','Speed','Distance'], es:['ritmo cardiaco','velocidad','distancia']}; locales.de=['Herzrate','Geschwindigkeit','Distanz'];
  return locales[lang]?locales[lang][locales.en.indexOf(i18)]:i18 } 
 hr.textContent=_('Heartrate')
 var gpx = '<?xml version="1.0" encoding="UTF-8"?>%0D%0A<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="dj" version="1.1"><trk><name>test</name><trkseg>%0D%0A'
