@@ -39,10 +39,9 @@ navigator.geolocation.watchPosition(function(pos) {
  var hr=1*scanBtnn.textContent||''; if(hr) hr='<gpxtpx:TrackPointExtension><gpxtpx:hr>'+hr+'</gpxtpx:hr></gpxtpx:TrackPointExtension>'
  if(pos.coords.speed || speed0) gpx += '<trkpt lat="' + pos.coords.latitude + '" lon="' + pos.coords.longitude + '">'+'<time>'+new Date().toJSON()+'</time>'+hr+'</trkpt>%0D%0A'
  if(time0) dst+=speed0*(pos.timestamp-time0)/1000/1000
- if(ls=='?rise') unit.textContent=((pos.coords.altitude-alt0)/(speed0*(pos.timestamp-time0)/1000)*100).toFixed()+' %'
- time0=pos.timestamp; speed0=pos.coords.speed; time1=time1||time0; alt0=pos.coords.altitude
+ time0=pos.timestamp; speed0=pos.coords.speed; time1=time1||time0
  var tmp=(pos.coords.speed*(imp?3.6:2.237)).toFixed(1).split('.'); speed.innerHTML=speedo? tmp[0]+'.<small>'+tmp[1]+'</small>' : (dst*(imp?1:0.621)).toFixed(1)
- if(ls=='?alt') unit.textContent=pos.coords.altitude.toFixed()+' m'  //?alt
+ if(ls=='?alt') unit.textContent=(pos.coords.altitude>alt0?'\u2191 ':'')+pos.coords.altitude.toFixed()+' m'; alt0=pos.coords.altitude  //?alt
  if(ls=='?head') {unit.textContent='\u2191';unit.style.transform='rotate('+-pos.coords.heading+'deg)'}  //?head compass
  if(ls=='?trip') unit.textContent=new Date(time0-time1).toJSON().slice(11,16)  //?trip time
  avg=dst/(time0-time1)*1000*1000; document.querySelector('meter').value=pos.coords.speed/(2*avg)  //speed in comparision with average speed (middle)
