@@ -90,7 +90,7 @@ if(ls=='?ambi') { const sensor = new AmbientLightSensor();
                 await miband$$1.init();
 
                 testn(miband$$1); window.setInterval(function(){testn(miband$$1)}, 60000)
-                navigator.getWakeLock("screen").then(function(wakeLock) { var request = wakeLock.createRequest(); console.log(wakeLock.active); });  //system, flag
+                navigator.wakeLock.request('screen')  //navigator.getWakeLock("screen").then(function(wakeLock) { var request = wakeLock.createRequest(); });  //flag
 
               } catch(error) {
                 console.log('Argh!', error);
