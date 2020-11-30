@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<button title='Activate' onclick='if(audio.paused) audio.play(); else audio.pause()' style='position:absolute; right:4px; color:blue'>►</button>
+<!-- <button title='Activate' onclick='if(audio.paused) audio.play(); else audio.pause()' style='position:absolute; right:4px; color:blue'>►</button>  -->
 
 <aside>  <!-- webcam here -->
 <select >
@@ -50,12 +50,14 @@ capture: <input type="number" name="update" min="1" value="600" size="3" title="
 
 <script src="webcam.js"></script></body>
 <script>
+/*
 var audio=new Audio()
 audio.src='https://upload.wikimedia.org/wikipedia/commons/c/c6/Sound_Classic_Metronome_96.ogg'
 audio.loop=true  //
-audio.onpause=function(){shot.click()}  //press pause on miband audioplayer
+audio.onpause=function(){shot.click()}  //press pause on miband audioplayer  //don't work
 //document.querySelector('button').disabled=true; videoElement.onloadstart=function(){document.querySelector('button').disabled=false}  //
-window.onblur=function(){shot.click()}  //test search handy
+*/
+window.onblur=function(){shot.click()}  //press search handy on miband
 </script>
 
 </html>
