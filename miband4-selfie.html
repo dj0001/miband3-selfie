@@ -57,7 +57,7 @@ audio.loop=true  //
 audio.onpause=function(){shot.click()}  //press pause on miband audioplayer  //don't work
 //document.querySelector('button').disabled=true; videoElement.onloadstart=function(){document.querySelector('button').disabled=false}  //
 */
-window.onblur=function(){shot.click()}  //press search handy on miband
+if(!location.search) window.onblur=function(){shot.click()}  //press search handy on miband
 </script>
 
 </html>
