@@ -8,7 +8,7 @@
 <link rel="icon" sizes="192x192" href="favicon.png">
 <title>Mi Band 4</title>
 <style>
-
+button>span {color:orange; border: 1px solid red;}
 </style>
 </head>
 
@@ -30,7 +30,7 @@
 <div style='background:#cfd8dc'>
 capture: <input type="number" name="update" min="1" value="600" size="3" title="interval">s File: <input type="text" name="fname" value="out" title="(path+)name">.
 <select name="ft"><option>png</option><option selected>jpeg</option></select> 
-<button id="shot">start</button>
+<button id="shot"><span>🔍&#xfe0e;</span> start</button>
 <select name="effect">
   <option>&nbsp;none</option>
   <option>&#x25D0;gray</option>
@@ -43,7 +43,7 @@ capture: <input type="number" name="update" min="1" value="600" size="3" title="
  Overlay: <input type="text" name="overlay" value="%D" title="%d = date">
  motion<input type="checkbox" id="md" onclick='if(this.checked) document.getElementsByName("update")[0].value=1' title="detection">
 &frac12;<input type="checkbox" id="sz" title="size">
-<a id='link' download='mypic.jpg'>download</a>
+<a id='link' download='mypic.jpg'>⇩download</a>
 </div>
 </aside>
 
@@ -57,7 +57,7 @@ audio.loop=true  //
 audio.onpause=function(){shot.click()}  //press pause on miband audioplayer  //don't work
 //document.querySelector('button').disabled=true; videoElement.onloadstart=function(){document.querySelector('button').disabled=false}  //
 */
-if(!location.search) window.onblur=function(){shot.click()}  //press search handy on miband
+if(!location.search) window.onblur=function(){shot.click()}; else document.querySelector('button>span').textContent='⦿'  //press search handy on miband
 </script>
 
 </html>
