@@ -9,11 +9,13 @@
 <title>Mi Band 4</title>
 <style>
 button>span {color:orange; border: 1px solid red;}
+a[target] {position:absolute; right:4px}
 </style>
 </head>
 
 <body>
 <!-- <button title='Activate' onclick='if(audio.paused) audio.play(); else audio.pause()' style='position:absolute; right:4px; color:blue'>►</button>  -->
+<a href='https://github.com/dj0001/miband3-selfie/blob/master/miband4-selfie.html' target='g'>github</a>
 
 <aside>  <!-- webcam here -->
 <select >
@@ -30,7 +32,7 @@ button>span {color:orange; border: 1px solid red;}
 <div style='background:#cfd8dc'>
 capture: <input type="number" name="update" min="1" value="600" size="3" title="interval">s File: <input type="text" name="fname" value="out" title="(path+)name">.
 <select name="ft"><option>png</option><option selected>jpeg</option></select> 
-<button id="shot"><span>🔍&#xfe0e;</span> start</button>
+<button id="shot" disabled><span>🔍&#xfe0e;</span> start</button>
 <select name="effect">
   <option>&nbsp;none</option>
   <option>&#x25D0;gray</option>
@@ -58,6 +60,8 @@ audio.onpause=function(){shot.click()}  //press pause on miband audioplayer  //d
 //document.querySelector('button').disabled=true; videoElement.onloadstart=function(){document.querySelector('button').disabled=false}  //
 */
 if(!location.search) window.onblur=function(){shot.click()}; else document.querySelector('button>span').textContent='⦿'  //press search handy on miband
+videoElement.onloadstart=function(){shot.disabled=false}
+link.addEventListener('click',function(){this.download=this.download.replace('%D',new Date().toJSON().slice(0,-5))})  //
 </script>
 
 </html>
