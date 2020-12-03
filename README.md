@@ -19,4 +19,5 @@ then go to devicesearch (under More) on miband, longpress, and theMediaDevice sh
 08.01. smart alarm (Scan)  
 14.01. continuous [heartrate](https://dj0001.github.io/miband3-selfie/csvtocanvas.htm?hrmStart) Monitor and 29.01. [steps](https://dj0001.github.io/miband3-selfie/csvtocanvas.htm?steps) and 10.02. [cycling](https://dj0001.github.io/miband3-selfie/csvtocanvas.htm?kiox)  
 12.02. [Kiox](https://dj0001.github.io/miband3-selfie/kiox.htm) display (longtouch value to download gpx track, ?alt, head, trip)  
+  
 .11.20 [miband4-selfie](https://dj0001.github.io/miband3-selfie/miband4-selfie.html) (search handy)
