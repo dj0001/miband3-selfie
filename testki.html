@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/png" href="favicon.png" /><title>Kiox display</title>
+<style>
+body {font-family:Helvetica; background:#535353; color: white; height: 100vh; overflow:hidden}
+h3 {color:#00baf2}
+h1, h3 {text-align: center}
+h4 {text-align: right}
+#unit {float:right;font-weight: bold}
+.light {background:white; color:#535353}
+meter::-webkit-meter-bar {background: linear-gradient(to right, #ddd 49%, black 50%, #ddd 51%)}
+h4>a {text-decoration:none; color:white}
+</style></head>
+<body >
+
+<a target="map"><meter></meter></a><span id="unit"></span>
+<a download='mytrack.gpx'><h1 id="speed">25</h1></a>
+<h3 id="shot">Speed</h3>
+<hr>
+<h4><a href="https://github.com/dj0001/miband3-selfie">bpm</a></h4>
+<h1 id="scanBtnn">&#x16d2;</h1>
+<h3 id='hr'></h3>
+
+<script>
+var imp=true, speedo=true, col=true  //edit here
+var time1,time0,speed0, dst=0, mx=0, avg, ls=location.search, alt0
+function _(i18,lang) { lang=lang||navigator.language.split('-')[0]
+ var locales={en:['Heartrate','Speed','Distance'], es:['ritmo cardiaco','velocidad','distancia']}; locales.de=["Herzrate","Geschwindigkeit","Distanz"];
+ return locales[lang]?locales[lang][locales.en.indexOf(i18)]:i18 } 
+hr.textContent=_('Heartrate')
+var gpx = '<?xml version="1.0" encoding="UTF-8"?>%0D%0A<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="dj" version="1.1"><trk><name>test</name><trkseg>%0D%0A'
+if(col) document.querySelector('meter').low=0.51
+unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}
+shot.onclick=function(){speedo=!speedo; this.textContent=speedo?_('Speed'):_('Distance'); imp=!imp;unit.click()}; speedo=!speedo;shot.click()  //device search
+speed.onclick=function(){this.textContent='\u2205 '+avg.toFixed(1)}
+speed.oncontextmenu=function(){document.querySelector("a[download]").href="data:application/gpx+xml,"+gpx+"</trkseg></trk></gpx>"}
+if(ls=='?bright') document.body.classList.toggle("light")  //?bright theme
+
+navigator.geolocation.watchPosition(function(pos) {
+ var hr=1*scanBtnn.textContent||''; if(hr) hr='<gpxtpx:TrackPointExtension><gpxtpx:hr>'+hr+'</gpxtpx:hr></gpxtpx:TrackPointExtension>'
+ if(pos.coords.speed || speed0) gpx += '<trkpt lat="' + pos.coords.latitude + '" lon="' + pos.coords.longitude + '">'+'<time>'+new Date().toJSON()+'</time>'+hr+'</trkpt>%0D%0A'
+ document.querySelector('a[target=map]').href='https://www.openstreetmap.org/?mlat='+pos.coords.latitude+'&mlon='+pos.coords.longitude  //+'&layers=C'
+ if(time0) dst+=speed0*(pos.timestamp-time0)/1000/1000
+ time0=pos.timestamp; speed0=pos.coords.speed; time1=time1||time0
+ var tmp=(pos.coords.speed*(imp?3.6:2.237)).toFixed(1).split('.'); speed.innerHTML=speedo? tmp[0]+'.<small>'+tmp[1]+'</small>' : (dst*(imp?1:0.621)).toFixed(1)
+ if(ls=='?alt') unit.textContent=(pos.coords.altitude>alt0?'\u2191 ':'')+pos.coords.altitude.toFixed()+' m'; alt0=pos.coords.altitude  //?alt
+ if(ls=='?head') {unit.textContent='\u2191';unit.style.transform='rotate('+-pos.coords.heading+'deg)'}  //?head compass
+ if(ls=='?trip') unit.textContent=new Date(time0-time1).toJSON().slice(11,16)  //?trip time
+ avg=dst/(time0-time1)*1000*1000; document.querySelector('meter').value=pos.coords.speed/(2*avg)  //speed in comparision with average speed (middle)
+ if(col) document.querySelector('meter').high=mx/(2*avg); mx=Math.max(mx,speed0)
+ }, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})
+
+if(ls=='?ambi') { const sensor = new AmbientLightSensor();
+ sensor.onreading = () => {if (sensor.illuminance>10) document.body.classList.add("light"); else document.body.classList.remove("light")}
+ sensor.start() }  //flag
+</script>
+<!-- <script src="webapp.bundle.js"></script>  -->
+<script>
+            //const bluetooth = navigator.bluetooth;
+
+           document.querySelector('#scanBtnn').addEventListener('click', scann);
+
+const connect = async props => {
+  console.clear()
+  const device = await navigator.bluetooth.requestDevice({
+    filters: [{ services: ['heart_rate'] }],
+    acceptAllDevices: false,
+  })
+  console.log(`%c\n👩🏼‍⚕️`, 'font-size: 82px;', 'Starting HR...\n\n')
+  const server = await device.gatt.connect(),
+    service = await server.getPrimaryService('heart_rate'),
+    char = await service.getCharacteristic('heart_rate_measurement')
+
+  char.oncharacteristicvaluechanged = props.onChange
+  char.startNotifications()
+  return char
+}
+
+const data = []
+
+
+function scann() {
+connect({
+  onChange: e => {
+    const val = e.target.value.getInt8(1)
+    data.push(val / 2)
+    let arr = data.slice(-200)
+    if (arr.length < 200) {
+      const fill = []
+      let n = 200 - arr.length
+      while (n--) fill.push(arr[0])
+      arr = fill.concat(arr)
+    }
+    console.clear()
+    //console.graph(arr)
+    console.log(val)  //console.log(`%c\n💚 ${val}`, 'font-size: 24px;')
+    scanBtnn.textContent=val
+  },
+}).catch(e => console.warn(Error(e)))
+}
+
+/*
+            async function scann() {
+              if (!bluetooth) {
+                console.log(scanBtnn.textContent='WebBluetooth is not supported by your browser!');
+                return;
+              }
+
+              try {
+                console.log('Requesting Bluetooth Device...'); scanBtnn.textContent='...'
+                const device = await bluetooth.requestDevice({
+                  filters: [
+                    { services: [ miband.advertisementService ] }
+                  ],
+                  optionalServices: miband.optionalServices
+                });
+
+                device.addEventListener('gattserverdisconnected', () => {
+                  console.log('Device disconnected');
+                });
+
+                await device.gatt.disconnect();
+
+                console.log('Connecting to the device...');
+                const server = await device.gatt.connect();
+                console.log('Connected');
+
+                let miband$$1 = new miband(server);
+
+                await miband$$1.init();
+
+                testn(miband$$1); window.setInterval(function(){testn(miband$$1)}, 60000)
+                navigator.wakeLock.request('screen')  //navigator.getWakeLock("screen").then(function(wakeLock) { var request = wakeLock.createRequest(); });  //flag
+
+              } catch(error) {
+                console.log('Argh!', error);
+              }
+            }
+            
+ async function testn(miband) { scanBtnn.textContent=await miband.hrmRead() }
+ */
+</script>
+</body>
+</html>
