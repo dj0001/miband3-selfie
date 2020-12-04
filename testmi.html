@@ -36,12 +36,12 @@ const connect = async props => {
   console.clear()
   const device = await navigator.bluetooth.requestDevice({
     filters: [{ services: [0xFEE0] }],  //heart_rate
-    optionalServices:['heart_rate','00002a37-0000-1000-8000-00805f9b34fb'],  //
+    optionalServices:['heart_rate'],  //,'00002a37-0000-1000-8000-00805f9b34fb'
     acceptAllDevices: false,  //true not with filters
   })
   console.log(`%c\n👩🏼‍⚕️`, 'font-size: 82px;', 'Starting HR...\n\n')
   const server = await device.gatt.connect(),
-    service = await server.getPrimaryService('00002a37-0000-1000-8000-00805f9b34fb'),  //'heart_rate'
+    service = await server.getPrimaryService('heart_rate'),  //'heart_rate'
     char = await service.getCharacteristic('heart_rate_measurement')
 
   char.oncharacteristicvaluechanged = props.onChange
@@ -66,6 +66,7 @@ connect({
     console.clear()
     console.graph(arr)
     console.log(`%c\n💚 ${val}`, 'font-size: 24px;')
+    st.textContent= val  //show on mobile
   },
 }).catch(e => console.warn(Error(e)))
 }
