@@ -59,7 +59,7 @@ audio.loop=true  //
 audio.onpause=function(){shot.click()}  //press pause on miband audioplayer  //don't work
 //document.querySelector('button').disabled=true; videoElement.onloadstart=function(){document.querySelector('button').disabled=false}  //
 */
-if(!location.search) window.onblur=function(){shot.click()}; else document.querySelector('button>span').textContent='⦿'  //press search handy on miband
+if(navigator.bluetooth && !location.search) window.onblur=function(){shot.click()}; else document.querySelector('button>span').textContent='⦿'  //press search handy on miband
 videoElement.onloadstart=function(){shot.disabled=false}
 link.addEventListener('click',function(){this.download=this.download.replace('%D',new Date().toJSON().slice(0,-5))})  //
 </script>
