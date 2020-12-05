@@ -97,6 +97,7 @@ connect({
     scanBtnn.textContent=val
   },
 }).catch(e => console.warn(Error(e)))
+navigator.wakeLock.request('screen')  //
 }
 
 /*
