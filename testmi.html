@@ -35,7 +35,7 @@ Pass the index of the hr, (2nd item in the Array buffer): val.getInt8(1)
 const connect = async props => {
   console.clear()
   const device = await navigator.bluetooth.requestDevice({
-    filters: [{ services: [0xFEE0] }],  //heart_rate
+    filters: [{ services: [0xFEE0,'heart_rate'] }],  //heart_rate
     optionalServices:['heart_rate'],  //,'00002a37-0000-1000-8000-00805f9b34fb'
     acceptAllDevices: false,  //true not with filters
   })
