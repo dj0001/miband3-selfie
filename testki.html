@@ -23,7 +23,7 @@ h4>a {text-decoration:none; color:white}
 
 <script>
 var imp=true, speedo=true, col=true  //edit here
-var time1,time0,speed0, dst=0, mx=0, avg, ls=location.search, alt0
+var time1,time0,speed0, dst=0, mx=0, avg, ls=location.search, alt0, hrmx=0
 function _(i18,lang) { lang=lang||navigator.language.split('-')[0]
  var locales={en:['Heartrate','Speed','Distance'], es:['ritmo cardiaco','velocidad','distancia']}; locales.de=["Herzrate","Geschwindigkeit","Distanz"];
  return locales[lang]?locales[lang][locales.en.indexOf(i18)]:i18 } 
@@ -53,6 +53,8 @@ navigator.geolocation.watchPosition(function(pos) {
 if(ls=='?ambi') { const sensor = new AmbientLightSensor();
  sensor.onreading = () => {if (sensor.illuminance>10) document.body.classList.add("light"); else document.body.classList.remove("light")}
  sensor.start() }  //flag
+ 
+hr.onclick=function(){scanBtnn.textContent='≤ '+hrmx}  //
 </script>
 <!-- <script src="webapp.bundle.js"></script>  -->
 <script>
@@ -96,6 +98,7 @@ connect({
     //console.graph(arr)
     console.log(val)  //console.log(`%c\n💚 ${val}`, 'font-size: 24px;')
     scanBtnn.textContent=val
+    hrmx=Math.max(hrmx,val)  //
   },
 }).catch(e => console.warn(Error(e)))
 navigator.wakeLock.request('screen')  //
