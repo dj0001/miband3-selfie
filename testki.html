@@ -79,10 +79,12 @@ const connect = async props => {
   return char
 }
 
-const data = []
-
 
 function scann() {
+const data = []
+var hrtime0, hrtime1, hrval, hrb=0  //
+hr.oncontextmenu=function(){scanBtnn.textContent='∅ '+(hrb/(hrtime0-hrtime1)*1000*60).toFixed(1); return false}  //
+
 connect({
   onChange: e => {
     const val = e.target.value.getInt8(1)
@@ -99,6 +101,8 @@ connect({
     console.log(val)  //console.log(`%c\n💚 ${val}`, 'font-size: 24px;')
     scanBtnn.textContent=val
     hrmx=Math.max(hrmx,val)  //
+    if(hrtime0) hrb+=hrval*(Date.now()-hrtime0)/1000/60; else hrtime1=Date.now()
+    hrval=val; hrtime0=Date.now()
   },
 }).catch(e => console.warn(Error(e)))
 navigator.wakeLock.request('screen')  //
