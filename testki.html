@@ -65,7 +65,7 @@ hr.onclick=function(){scanBtnn.textContent='≤ '+hrmx}  //
 const connect = async props => {
   console.clear()
   const device = await navigator.bluetooth.requestDevice({
-    filters: [{ services: ['heart_rate'] }],
+    filters: [{ services: [0xFEE0] }, { services: ['heart_rate'] }],
     acceptAllDevices: false,
   })
   console.log(`%c\n👩🏼‍⚕️`, 'font-size: 82px;', 'Starting HR...\n\n')
