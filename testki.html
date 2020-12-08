@@ -46,8 +46,8 @@ navigator.geolocation.watchPosition(function(pos) {
  if(ls=='?alt') unit.textContent=(pos.coords.altitude>alt0?'\u2191 ':'')+pos.coords.altitude.toFixed()+' m'; alt0=pos.coords.altitude  //?alt
  if(ls=='?head') {unit.textContent='\u2191';unit.style.transform='rotate('+-pos.coords.heading+'deg)'}  //?head compass
  if(ls=='?trip') unit.textContent=new Date(time0-time1).toJSON().slice(11,16)  //?trip time
- avg=dst/(time0-time1)*1000*1000; document.querySelector('meter').value=pos.coords.speed/(2*avg)  //speed in comparision with average speed (middle)
- if(col) document.querySelector('meter').high=mx/(2*avg); mx=Math.max(mx,speed0)
+ avg=dst/(time0-time1)*1000*1000; document.querySelector('meter').value=pos.coords.speed/(2*avg)||0  //speed in comparision with average speed (middle)
+ if(col) document.querySelector('meter').high=mx/(2*avg)||1; mx=Math.max(mx,speed0)
  }, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})
 
 if(ls=='?ambi') { const sensor = new AmbientLightSensor();
@@ -81,21 +81,21 @@ const connect = async props => {
 
 
 function scann() {
-const data = []
+//const data = []
 var hrtime0, hrtime1, hrval, hrb=0  //
 hr.oncontextmenu=function(){scanBtnn.textContent='∅ '+(hrb/(hrtime0-hrtime1)*1000*60).toFixed(1); return false}  //
 
 connect({
   onChange: e => {
     const val = e.target.value.getInt8(1)
-    data.push(val / 2)
+    /* data.push(val / 2)
     let arr = data.slice(-200)
     if (arr.length < 200) {
       const fill = []
       let n = 200 - arr.length
       while (n--) fill.push(arr[0])
       arr = fill.concat(arr)
-    }
+    } */
     console.clear()
     //console.graph(arr)
     console.log(val)  //console.log(`%c\n💚 ${val}`, 'font-size: 24px;')
