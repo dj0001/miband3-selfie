@@ -70,7 +70,7 @@ const connect = async props => {
   })
   console.log(`%c\n👩🏼‍⚕️`, 'font-size: 82px;', 'Starting HR...\n\n')
   scanBtnn.textContent='...'
-  await device.gatt.disconnect();  //?
+  //await device.gatt.disconnect();  //?
   const server = await device.gatt.connect(),
     service = await server.getPrimaryService('heart_rate'),
     char = await service.getCharacteristic('heart_rate_measurement')
