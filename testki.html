@@ -105,7 +105,7 @@ connect({
     scanBtnn.textContent=val
     hrmx=Math.max(hrmx,val)  //
     if(hrtime0) hrb+=hrval*(Date.now()-hrtime0)/1000/60; else hrtime1=Date.now()
-    if(hrval && val!=hrval) scanBtnn.textContent += val>hrval? ' ↗':' ↘'  //
+    document.querySelector('h4>a').textContent='bpm'; if(hrval && val!=hrval) document.querySelector('h4>a').textContent += val>hrval? '↗':'↘'  //
     hrval=val; hrtime0=Date.now()
   },
 }).catch(e => console.warn(Error(e)))
