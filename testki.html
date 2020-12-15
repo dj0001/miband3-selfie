@@ -106,6 +106,7 @@ connect({
     hrmx=Math.max(hrmx,val)  //
     if(hrtime0) hrb+=hrval*(Date.now()-hrtime0)/1000/60; else hrtime1=Date.now()
     document.querySelector('h4>a').textContent='bpm'; if(hrval && val!=hrval) document.querySelector('h4>a').textContent += val>hrval? '↗':'↘'  //
+    if(!speed0) {document.querySelector('meter').value=val/180; document.querySelector('meter').high=.85}  //
     hrval=val; hrtime0=Date.now()
   },
 }).catch(e => console.warn(Error(e)))
