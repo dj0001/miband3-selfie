@@ -48,8 +48,8 @@ navigator.geolocation.watchPosition(function(pos) {
  if(ls=='?alt') unit.textContent=(pos.coords.altitude>alt0?'\u2191 ':'')+pos.coords.altitude.toFixed()+' m'; alt0=pos.coords.altitude  //?alt
  if(ls=='?head') {unit.textContent='\u2191';unit.style.transform='rotate('+-pos.coords.heading+'deg)'}  //?head compass
  if(ls=='?trip') unit.textContent=new Date(time0-time1).toJSON().slice(11,16)  //?trip time
- avg=dst/(time0-time1)*1000*1000; document.querySelector('meter').value=pos.coords.speed/(2*avg)||0  //speed in comparision with average speed (middle)
- if(col) document.querySelector('meter').high=mx/(2*avg)||1; mx=Math.max(mx,speed0)
+ avg=dst/(time0-time1)*1000*1000; if(isNaN(scanBtnn.textContent)) document.querySelector('meter').value=pos.coords.speed/(2*avg)||0  //speed in comparision with average speed (middle)
+ if(col && isNaN(scanBtnn.textContent)) document.querySelector('meter').high=mx/(2*avg)||1; mx=Math.max(mx,speed0)
  }, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})
 
 if(ls=='?ambi') { const sensor = new AmbientLightSensor();
@@ -106,7 +106,7 @@ connect({
     hrmx=Math.max(hrmx,val)  //
     if(hrtime0) hrb+=hrval*(Date.now()-hrtime0)/1000/60; else hrtime1=Date.now()
     document.querySelector('h4>a').textContent='bpm'; if(hrval && val!=hrval) document.querySelector('h4>a').textContent += val>hrval? '↗':'↘'  //
-    if(!speed0||speed0<.1) {document.querySelector('meter').value=val/180; document.querySelector('meter').high=.85}  //
+    document.querySelector('meter').value=val/180; document.querySelector('meter').high=.85  //
     hrval=val; hrtime0=Date.now()
   },
 }).catch(e => console.warn(Error(e)))
