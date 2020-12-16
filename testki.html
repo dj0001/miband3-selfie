@@ -30,7 +30,7 @@ function _(i18,lang) { lang=lang||navigator.language.split('-')[0]
  var locales={en:['Heartrate','Speed','Distance'], es:['ritmo cardiaco','velocidad','distancia']}; locales.de=["Herzrate","Geschwindigkeit","Distanz"];
  return locales[lang]?locales[lang][locales.en.indexOf(i18)]:i18 } 
 hr.textContent=_('Heartrate')
-var gpx = '<?xml version="1.0" encoding="UTF-8"?>%0D%0A<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="dj" version="1.1"><trk><name>test</name><trkseg>%0D%0A'
+var gpx = '<?xml version="1.0" encoding="UTF-8"?>%0D%0A<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxtpx="https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd" creator="dj" version="1.1"><trk><name>test</name><trkseg>%0D%0A'
 if(col) document.querySelector('meter').low=0.51
 unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}
 shot.onclick=function(){speedo=!speedo; this.textContent=speedo?_('Speed'):_('Distance'); imp=!imp;unit.click()}; speedo=!speedo;shot.click()  //device search
