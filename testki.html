@@ -36,7 +36,7 @@ if(col) document.querySelector('meter').low=0.51
 unit.onclick=function(){imp=!imp; unit.textContent=(imp?'km':'mi')+(speedo?'/h':'')}
 shot.onclick=function(){speedo=!speedo; this.textContent=speedo?_('Speed'):_('Distance'); imp=!imp;unit.click()}; speedo=!speedo;shot.click()  //device search
 speed.onclick=function(){this.textContent='\u2205 '+avg.toFixed(1)}
-speed.oncontextmenu=function(){document.querySelector("a[download]").href="data:application/gpx+xml,"+gpx+"</trkseg></trk></gpx>"}
+speed.oncontextmenu=function(){document.querySelector("a[download]").href="data:application/gpx+xml,"+gpx+"</trkseg></trk></gpx>"; document.querySelector("a[download]").download='mytrack'+new Date().toJSON().slice(0,-5)+'.gpx'}
 if(ls=='?bright') document.body.classList.toggle("light")  //?bright theme
 
 navigator.geolocation.watchPosition(function(pos) {
