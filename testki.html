@@ -115,46 +115,17 @@ navigator.wakeLock.request('screen')  //
 document.querySelector('h4>a').href='csvtocanvas.htm?'
 }
 
-/*
-            async function scann() {
-              if (!bluetooth) {
-                console.log(scanBtnn.textContent='WebBluetooth is not supported by your browser!');
-                return;
-              }
-
-              try {
-                console.log('Requesting Bluetooth Device...'); scanBtnn.textContent='...'
-                const device = await bluetooth.requestDevice({
-                  filters: [
-                    { services: [ miband.advertisementService ] }
-                  ],
-                  optionalServices: miband.optionalServices
-                });
-
-                device.addEventListener('gattserverdisconnected', () => {
-                  console.log('Device disconnected');
-                });
-
-                await device.gatt.disconnect();
-
-                console.log('Connecting to the device...');
-                const server = await device.gatt.connect();
-                console.log('Connected');
-
-                let miband$$1 = new miband(server);
-
-                await miband$$1.init();
-
-                testn(miband$$1); window.setInterval(function(){testn(miband$$1)}, 60000)
-                navigator.wakeLock.request('screen')  //navigator.getWakeLock("screen").then(function(wakeLock) { var request = wakeLock.createRequest(); });  //flag
-
-              } catch(error) {
-                console.log('Argh!', error);
-              }
-            }
-            
- async function testn(miband) { scanBtnn.textContent=await miband.hrmRead() }
- */
+      if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw_ki.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch(function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
 </script>
 </body>
 </html>
