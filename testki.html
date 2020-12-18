@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/png" href="favicon.png" /><title>Kiox2 display</title>
 <meta name="Description" content="3rd party HR access must be enabled (and Gadgetbridge must be connected)">
-<link rel="manifest" href="manifest_ki.json">
+<!-- <link rel="manifest" href="manifest_ki.json">  -->
 <style>
 body {font-family:Helvetica; background:#535353; color: white; height: 100vh; overflow:hidden}
 h3 {color:#00baf2}
@@ -116,7 +116,7 @@ navigator.wakeLock.request('screen')  //
 document.querySelector('h4>a').href='csvtocanvas.htm?'
 }
 
-      if ('serviceWorker' in navigator) {
+      /* if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('sw_ki.js').then(function(registration) {
       // Registration was successful
@@ -126,7 +126,7 @@ document.querySelector('h4>a').href='csvtocanvas.htm?'
       console.log('ServiceWorker registration failed: ', err);
     });
   });
-}
+} */
 </script>
 </body>
 </html>
