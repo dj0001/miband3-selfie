@@ -147,6 +147,7 @@ navigator.wakeLock.request('screen')  //
 output.textContent='Download'  //
 }
 if(!navigator.bluetooth) scanBtn.disabled=true  //
+output.oncontextmenu=function(){var file=new File([new Blob([hrs.join('%0A')], {type:'text/plain'})], "pulse.csv"); navigator.share({title:'\u2665',files:[file]}); return false}  //
 </script>
 <!-- <script src="webapp.bundle.js"></script> -->
 </body>
