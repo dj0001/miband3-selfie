@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/png" href="favicon.png" /><title>&hearts; Monitor2</title>
+<meta name="Description" content="3rd party HR access must be enabled (and Gadgetbridge must be connected)">
 <style>
 @keyframes example {  0% {border-color: transparent}  50% {border-color: white} 100% {border-color: transparent}}
 .h1-right {border:1px solid transparent;border-radius:50%;padding:1px;animation: example 0s infinite; text-decoration:none}
@@ -140,7 +141,7 @@ connect({
     //document.querySelector('h4>a').href+=(Date.now()/1000).toFixed()+';'+val+','  //
     hrs.push(Date.now()/1000+';'+val);manu()
   },
-}).catch(e => {console.warn(Error(e)); })  //scanBtnn.textContent=e.message
+}).catch(e => {console.warn(Error(e)); output.textContent=e.message})
 navigator.wakeLock.request('screen')  //
 //document.querySelector('h4>a').href='csvtocanvas.htm?'  //
 output.textContent='Download'  //
