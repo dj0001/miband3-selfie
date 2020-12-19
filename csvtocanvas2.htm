@@ -3,15 +3,16 @@
 <head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/png" href="favicon.png" /><title>&hearts; Monitor2</title>
 <style>
 @keyframes example {  0% {border-color: transparent}  50% {border-color: white} 100% {border-color: transparent}}
-.h1-right {border:1px solid transparent;border-radius:50%;padding:1px;animation: example 0s infinite}
+.h1-right {border:1px solid transparent;border-radius:50%;padding:1px;animation: example 0s infinite; text-decoration:none}
 canvas {border:1px solid #d3d3d3;background:repeating-linear-gradient(to top,transparent,transparent 59px,#d3d3d3 60px)}
 body {background: #eee}
+h1 {width:600px} .btn-scan {float:right}
 </style></head>
 <body style='width:initial;box-shadow:initial'>
 
 <header><h1><a href="https://github.com/dj0001/miband3-selfie" class="h1-right" style='color:#41c5f4;transition: color 1s'>&hearts;</a></h1><button id="scanBtn" class="btn-scan">Scan</button></header>
 <canvas id="myCanvas" width="600" height="180" onclick="if(event.shiftKey) j+=720; else z=!z; manu(); navigator.share({title:'\u2665',url:'?'+hrs})"></canvas>
-<main style="display: none;"><a style="cursor: pointer;white-space: pre" id="output" download='pulse.csv'></a></main>
+<main><a style="cursor: pointer;white-space: pre" id="output" download='pulse.csv'></a></main>
 
 <input type="file" id="upl"/><label for="upl">Optionally upload HR.csv</label>
 
@@ -41,7 +42,7 @@ if(mx<canvas.height-16) ctx.fillText(mx,680,canvas.height-mx)  //
 }
 
 function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
-
+/*
 var mutationObserver = new MutationObserver(function() {
  const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {hrs.push(tmp.replace(' ',''));manu();if(upluri) upload(tmp.split(';')[1]);
   if(tmp.split(';')[1]>hrnoti && hrs[hrs.length-2].split(';')[1]<=hrnoti) document.querySelector('.h1-right').dispatchEvent(event)}
@@ -49,7 +50,7 @@ var mutationObserver = new MutationObserver(function() {
 });
 
 mutationObserver.observe(output, {childList: true});
-
+*/
 if(ls=='?kiox') {ls='?1'; navigator.geolocation.watchPosition(function(pos) {scanBtn.innerHTML=Math.round(pos.coords.speed*3.6)+' <sup>km/h</sup>'}, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})}
 var event=new Event('contextmenu');if(ls.slice(1)>=1) {window.setInterval(function(){scanBtn.dispatchEvent(event)}, ls.slice(1)*60000)}  //?1 hr every 1 min
 output.onclick=function(){output.href='data:,'+hrs.join('%0A')}  //+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])
@@ -142,6 +143,7 @@ connect({
 }).catch(e => {console.warn(Error(e)); })  //scanBtnn.textContent=e.message
 navigator.wakeLock.request('screen')  //
 //document.querySelector('h4>a').href='csvtocanvas.htm?'  //
+output.textContent='Download'  //
 }
 </script>
 <!-- <script src="webapp.bundle.js"></script> -->
