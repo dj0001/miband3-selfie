@@ -117,7 +117,7 @@ const connect = async props => {
 
 function scann() {
 //const data = []
-var hrtime0, hrtime1, hrval, hrb=0  //hravg
+//var hrtime0, hrtime1, hrval, hrb=0  //hravg
 //hr.oncontextmenu=function(){scanBtnn.textContent='∅ '+(hrb/(hrtime0-hrtime1)*1000*60).toFixed(1); return false}  //
 
 connect({
@@ -137,7 +137,7 @@ connect({
     //hrmx=Math.max(hrmx,val)  //
     //if(hrtime0) hrb+=hrval*(Date.now()-hrtime0)/1000/60; else hrtime1=Date.now()
     //document.querySelector('h4>a').textContent='bpm'; if(hrval && val!=hrval) document.querySelector('h4>a').textContent += val>hrval? '↗':'↘'  //
-    hrval=val; hrtime0=Date.now()
+    //hrval=val; hrtime0=Date.now()
     //document.querySelector('h4>a').href+=(Date.now()/1000).toFixed()+';'+val+','  //
     hrs.push(Date.now()/1000+';'+val);manu()
   },
