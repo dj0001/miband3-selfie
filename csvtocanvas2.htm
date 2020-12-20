@@ -104,7 +104,7 @@ const connect = async props => {
     acceptAllDevices: false,
   })
   console.log(`%c\n👩🏼‍⚕️`, 'font-size: 82px;', 'Starting HR...\n\n')
-  scanBtn.textContent='...'
+  scanBtn.textContent='...'  //
   //await device.gatt.disconnect();  //?
   const server = await device.gatt.connect(),
     service = await server.getPrimaryService('heart_rate'),
@@ -139,13 +139,15 @@ connect({
     //document.querySelector('h4>a').textContent='bpm'; if(hrval && val!=hrval) document.querySelector('h4>a').textContent += val>hrval? '↗':'↘'  //
     //hrval=val; hrtime0=Date.now()
     //document.querySelector('h4>a').href+=(Date.now()/1000).toFixed()+';'+val+','  //
-    hrs.push(Date.now()/1000+';'+val);manu()
+    handlehr(val)  //hrs.push(Date.now()/1000+';'+val);manu()
   },
 }).catch(e => {console.warn(Error(e)); output.textContent=e.message})
 navigator.wakeLock.request('screen')  //
 //document.querySelector('h4>a').href='csvtocanvas.htm?'  //
 output.textContent='Download'  //
 }
+
+function handlehr(val) {hrs.push(Date.now()/1000+';'+val);manu()}
 if(!navigator.bluetooth) scanBtn.disabled=true  //
 output.oncontextmenu=function(){var file=new File([new Blob([hrs.join('\n')], {type:'text/plain'})], "pulse.csv", {type:'text/plain'}); if (navigator.canShare && navigator.canShare({ files: [file] })) navigator.share({title:'\u2665',files:[file]}); return false}  //
 </script>
