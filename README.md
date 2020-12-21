@@ -21,4 +21,4 @@ then go to devicesearch (under More) on miband, longpress, and theMediaDevice sh
 12.02. [Kiox](https://dj0001.github.io/miband3-selfie/kiox.htm) display (longtouch value to download gpx track, ?alt, head, trip)  
   
 .11.20 [miband4-selfie](https://dj0001.github.io/miband3-selfie/miband4-selfie.html) (search handy)  
-.12.20 [Kiox2](https://dj0001.github.io/miband3-selfie/testki.html) works with [BLE Peripheral Simulatur](https://play.google.com/store/apps/details?id=io.github.webbluetoothcg.bletestperipheral) on android, and with Miband 4 (Gadgetbridge must be connected)
+.12.20 [Kiox2](https://dj0001.github.io/miband3-selfie/testki.html) and [HR2](https://dj0001.github.io/miband3-selfie/csvtocanvas2.htm) works with [BLE Peripheral Simulatur](https://play.google.com/store/apps/details?id=io.github.webbluetoothcg.bletestperipheral) on android, and with Miband 4 (Gadgetbridge must be connected)
