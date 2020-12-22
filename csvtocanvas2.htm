@@ -148,7 +148,7 @@ navigator.wakeLock.request('screen')  //
 output.textContent='Download'  //
 }
 
-function handlehr(val) {hrs.push(Date.now()/1000+';'+val);manu()}
+function handlehr(val) {hrs.push(Date.now()/1000+';'+val);manu(); document.querySelector('.h1-right').style.animationDuration=60/val+'s'; if(upluri) upload(val)}
 if(!navigator.bluetooth) scanBtn.disabled=true  //
 output.oncontextmenu=function(){var file=new File([new Blob([hrs.join('\n')], {type:'text/plain'})], "pulse.csv", {type:'text/plain'}); if (navigator.canShare && navigator.canShare({ files: [file] })) navigator.share({title:'\u2665',files:[file]}); return false}  //
 </script>
