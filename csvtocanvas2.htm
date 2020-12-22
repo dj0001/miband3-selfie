@@ -40,7 +40,7 @@ ctx.stroke(); if(1*line[0]) ctx.fillText('\u2205'+(s/(X1[0]-line[0])*60).toFixed
 ctx.fillText(new Date((X1[0]-(z?1:60)*canvas.width)*1000).toJSON().slice(11,16), 0, canvas.height)  //5,16
 if(1*line[0]) ctx.fillText((a/60).toFixed()+'min', Math.min(tmp,570)-30, canvas.height)  //line[0]
 if(mx<canvas.height-16) ctx.fillText(mx,580,canvas.height-mx)  //
-ctx.fillText('♡'+(apai/60).toFixed(),0,90)  //PAI
+ctx.fillText((apai/60).toFixed()+'♡',300,8)  //PAI⬡
 //console.log(s*.056)  //energy in cal
 }
 
