@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/png" href="favicon.png" /><title>&hearts; Monitor2</title>
+<head><meta charset=UTF-8 /><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/png" href="favicon.png" /><title>&hearts; Monitor2</title>
 <meta name="Description" content="3rd party HR access must be enabled (and Gadgetbridge must be connected)">
 <style>
 @keyframes example {  0% {border-color: transparent}  50% {border-color: white} 100% {border-color: transparent}}
@@ -20,6 +20,7 @@ h1 {width:600px} .btn-scan {float:right}
 <script>
 var upluri='', hrnoti=Infinity, bar=false  // './' edit here
 var canvas = document.getElementById("myCanvas");
+if(window.matchMedia('(min-width:720px)').matches) canvas.width=720  //
 var ctx = canvas.getContext("2d");
 
 var hrs=[], z=location.search=='?hrmStart', j=0, ls=location.search; z=!z
@@ -132,7 +133,7 @@ navigator.wakeLock.request('screen')  //
 output.textContent='Download'  //
 }
 
-function handlehr(val) {hrs.push(Date.now()/1000+';'+val);manu(); document.querySelector('.h1-right').style.animationDuration=60/val+'s'; if(upluri) upload(val)}
+function handlehr(val) {hrs.push(Date.now()/1000+';'+val);manu(); document.querySelector('.h1-right').style.animationDuration=60/val+'s'; if(upluri) upload(val); navigator.setAppBadge(val)}
 if(!navigator.bluetooth) scanBtn.disabled=true  //
 output.oncontextmenu=function(){var file=new File([new Blob([hrs.join('\n')], {type:'text/plain'})], "pulse.csv", {type:'text/plain'}); if (navigator.canShare && navigator.canShare({ files: [file] })) navigator.share({title:'\u2665',files:[file]}); return false}  //
 </script>
