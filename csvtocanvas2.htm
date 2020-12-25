@@ -91,46 +91,33 @@ if (ls.slice(-4,-3)=='.') window.setInterval(function(){ //document.body.style.a
  })})
 }, 60000)
 if(ls.match(/;|%/)) cv(decodeURIComponent(ls.slice(1)).replace(/,/g,'\n'))  //?1547519549;77,1547519551;74
-
+/*
 function steps(stps){  //?steps
 if(hrs.length) {var X1=hrs[hrs.length-1].split(';'); var dt=Date.now()/1000-X1[0];if(dt<0.1) return; hrs[hrs.length-1]=X1[0]+';'+60*(stps-X1[1])/dt; manu()}  //steps/min
 hrs.push(Date.now()/1000+';'+stps) }
-
+*/
 
 document.querySelector('#scanBtn').addEventListener('click', scann);
 
-const connect = async props => {
-  console.clear()
-  const device = await navigator.bluetooth.requestDevice({
-    //filters: [{ services: ['heart_rate'] }],
-    filters: [{ services: [0xFEE0] }, { services: ['heart_rate'] }],
-    acceptAllDevices: false,
-  })
-  console.log(`%c\n👩🏼‍⚕️`, 'font-size: 82px;', 'Starting HR...\n\n')
-  scanBtn.textContent='...'  //
-  //await device.gatt.disconnect();  //?
-  const server = await device.gatt.connect(),
-    service = await server.getPrimaryService('heart_rate'),
-    char = await service.getCharacteristic('heart_rate_measurement')
-
-  char.oncharacteristicvaluechanged = props.onChange
-  char.startNotifications()  //await 
-  return char
-}
-
 function scann() {
+navigator.bluetooth.requestDevice({ filters: [{ services: [0xFEE0] }, { services: ['heart_rate'] }] })
+.then(device => device.gatt.connect())
+.then(server => server.getPrimaryService('heart_rate'))
+.then(service => service.getCharacteristic('heart_rate_measurement'))
+.then(characteristic => characteristic.startNotifications())
+.then(characteristic => {
+  characteristic.addEventListener('characteristicvaluechanged',
+                                  handleCharacteristicValueChanged);
+  console.log('Notifications have been started.');
+})
+.catch(error => { console.error(error); });
 
-connect({
-  onChange: e => {
-    const val = e.target.value.getInt8(1)
-    console.clear()
-    console.log(val)  //console.log(`%c\n💚 ${val}`, 'font-size: 24px;')
-    handlehr(val)  //hrs.push(Date.now()/1000+';'+val);manu()
-  },
-}).catch(e => {console.warn(Error(e)); output.textContent=e.message})
-navigator.wakeLock.request('screen')  //
-//document.querySelector('h4>a').href='csvtocanvas.htm?'  //
-output.textContent='Download'  //
+function handleCharacteristicValueChanged(event) {
+  const value = event.target.value;
+  console.log('Received ' + value);
+  // See https://github.com/WebBluetoothCG/demos/blob/gh-pages/heart-rate-sensor/heartRateSensor.js
+  handlehr(value.getInt8(1))
+}
 }
 
 function handlehr(val) {hrs.push(Date.now()/1000+';'+val);manu(); document.querySelector('.h1-right').style.animationDuration=60/val+'s'; if(upluri) upload(val); navigator.setAppBadge(val)}
