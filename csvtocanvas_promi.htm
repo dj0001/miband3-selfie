@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset=UTF-8 /><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/png" href="favicon.png" /><title>&hearts; Monitor2</title>
+<meta name="Description" content="3rd party HR access must be enabled (and Gadgetbridge must be connected)">
+<style>
+@keyframes example {  0% {border-color: transparent}  50% {border-color: white} 100% {border-color: transparent}}
+.h1-right {border:1px solid transparent;border-radius:50%;padding:1px;animation: example 0s infinite; text-decoration:none}
+canvas {border:1px solid #d3d3d3;background:repeating-linear-gradient(to top,transparent,transparent 59px,#d3d3d3 60px)}
+body {background: #eee}
+h1 {width:600px} .btn-scan {float:right}
+</style></head>
+<body style='width:initial;box-shadow:initial'>
+
+<header><h1><a href="https://github.com/dj0001/miband3-selfie" class="h1-right" style='color:#41c5f4;transition: color 1s'>&hearts;</a><button id="scanBtn" class="btn-scan">Scan</button></h1></header>
+<canvas id="myCanvas" width="600" height="180" onclick="if(event.shiftKey) j+=720; else z=!z; manu(); navigator.share({title:'\u2665',url:'?'+hrs})"></canvas>
+<main><a style="cursor: pointer;white-space: pre" id="output" download='pulse.csv'></a></main>  <!--  style="display: none;" -->
+
+<input type="file" id="upl"/><label for="upl">Optionally upload HR.csv</label>
+
+<script>
+var upluri='', hrnoti=Infinity, bar=false  // './' edit here
+var canvas = document.getElementById("myCanvas");
+if(window.matchMedia('(min-width:720px)').matches) canvas.width=720  //
+var ctx = canvas.getContext("2d");
+
+var hrs=[], z=location.search=='?hrmStart', j=0, ls=location.search; z=!z
+//canvas.width=720;
+ //console.log(canvas.width)
+
+function manu(){  //console.log(hrs)
+var X1=hrs[hrs.length-1-j].split(/;|\t/), mx=0, s=0, a=0, apai=0  //todo: spai, apai  all over 90
+document.querySelector('.h1-right').textContent=1*X1[1]  //crop in OBS
+document.querySelector('.h1-right').style.color='hsl('+(180-X1[1])+',100%,50%)'  //
+canvas.width=canvas.width; ctx.fillText(canvas.height, canvas.width-20, 8); ctx.fillText(new Date(X1[0]*1000).toJSON().slice(11,16), canvas.width-30, canvas.height)
+for(var i=hrs.length-1-j;i>=0;i--){
+ var line = hrs[i].split(/;|\t/)
+ const y=line[location.search.slice(1)]||line[1]  //?4 row
+ if(isNaN(y)) {canvas.title=y; continue}
+ var tmp=canvas.width+(1*line[0]-X1[0])/(z?1:60);if(tmp<0) break; if(bar) ctx.moveTo(tmp,canvas.height); if(y!=255) ctx.lineTo(tmp,canvas.height-1*y)
+ if(hrs[i+1]) {mx=Math.max(mx,y); var dt=hrs[i+1].split(/;|\t/)[0]-line[0]; s+=y*dt/60; if(y>=30) a+=dt; if(y>=90) apai+=dt }
+}
+ctx.stroke(); if(1*line[0]) ctx.fillText('\u2205'+(s/(X1[0]-line[0])*60).toFixed(), 0, 8)  //avg
+ctx.fillText(new Date((X1[0]-(z?1:60)*canvas.width)*1000).toJSON().slice(11,16), 0, canvas.height)  //5,16
+if(1*line[0]) ctx.fillText((a/60).toFixed()+'min', Math.min(tmp,570)-30, canvas.height)  //line[0]
+if(mx<canvas.height-16) ctx.fillText(mx,580,canvas.height-mx)  //
+ctx.fillText((apai/60).toFixed()+'♡',300,8)  //PAI⬡ //'♡'+(apai/60).toFixed(),0,90
+console.log(s*.056)  //energy in cal
+console.log(s)
+//console.log(spai/114)  //PAI*?
+console.log(apai)
+}
+
+function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
+/*
+var mutationObserver = new MutationObserver(function() {
+ const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {hrs.push(tmp.replace(' ',''));manu();if(upluri) upload(tmp.split(';')[1]);
+  if(tmp.split(';')[1]>hrnoti && hrs[hrs.length-2].split(';')[1]<=hrnoti) document.querySelector('.h1-right').dispatchEvent(event)}
+  document.querySelector('.h1-right').style.animationDuration=60/tmp.split(';')[1]+'s'  //
+});
+
+mutationObserver.observe(output, {childList: true});
+*/
+if(ls=='?kiox') {ls='?1'; navigator.geolocation.watchPosition(function(pos) {scanBtn.innerHTML=Math.round(pos.coords.speed*3.6)+' <sup>km/h</sup>'}, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})}
+var event=new Event('contextmenu');if(ls.slice(1)>=1) {window.setInterval(function(){scanBtn.dispatchEvent(event)}, ls.slice(1)*60000)}  //?1 hr every 1 min
+output.onclick=function(){output.href='data:,'+hrs.join('%0A')}  //+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])
+
+document.querySelector('input').onchange = function() { var reader=new FileReader(); if(this.files[0].name.match(/csv$|gpx$/))
+ {reader.onload=function(){cv(reader.result)};reader.readAsText(this.files[0])} else 
+ {reader.onload=function(){db(reader.result)};reader.readAsArrayBuffer(this.files[0])} }
+
+function cv(that) {
+ if(that.match('<gpx')) {that=that.replace(/.*?<time>(.*?)<.*?:hr>(.*?)<.*/g, function(m, p1, p2){return new Date(p1).getTime()/1000+';'+p2}).replace(/<.*\n?/g,'')}
+ const lines = that.replace(/\r?\n$/,'').split(/\r?\n/);
+ hrs=lines; manu()
+}
+
+//if(sessionStorage.csv) cv(sessionStorage.csv)  //dbtocsv
+function db(that) {
+var scr = document.createElement("script")
+scr.src='https://cdnjs.cloudflare.com/ajax/libs/sql.js/0.5.0/js/sql.js'
+scr.onload=function(){
+		var Uints = new Uint8Array(that);
+		var db = new SQL.Database(Uints);
+		var contents = db.exec("SELECT * FROM MI_BAND_ACTIVITY_SAMPLE");  //  LIMIT 0,30
+		console.log(contents[0].columns)
+		const csv=contents[0].values.join('\n').replace(/,/g,";")
+		cv(csv)
+    document.body.insertAdjacentHTML('beforeend', '<a download="miband.csv" href="data:,'+encodeURI(csv)+'">download</a>')  //(contents[0].columns+'\n').replace(/,/g,";")+
+}
+document.body.appendChild(scr)
+}
+
+if (ls.slice(-4,-3)=='.') window.setInterval(function(){ //document.body.style.all='initial';  //?rate.txt monitor
+ fetch(ls.slice(1)).then(function(response) {response.text().then(function(text){
+  if(ls.slice(-4)=='.txt') {hrs.push(Date.now()/1000+';'+text);manu()} else cv(text)  //document.body.innerHTML=text
+ })})
+}, 60000)
+if(ls.match(/;|%/)) cv(decodeURIComponent(ls.slice(1)).replace(/,/g,'\n'))  //?1547519549;77,1547519551;74
+/*
+function steps(stps){  //?steps
+if(hrs.length) {var X1=hrs[hrs.length-1].split(';'); var dt=Date.now()/1000-X1[0];if(dt<0.1) return; hrs[hrs.length-1]=X1[0]+';'+60*(stps-X1[1])/dt; manu()}  //steps/min
+hrs.push(Date.now()/1000+';'+stps) }
+*/
+
+document.querySelector('#scanBtn').addEventListener('click', scann);
+/*
+const connect = async props => {
+  console.clear()
+  const device = await navigator.bluetooth.requestDevice({
+    //filters: [{ services: ['heart_rate'] }],
+    filters: [{ services: [0xFEE0] }, { services: ['heart_rate'] }],
+    acceptAllDevices: false,
+  })
+  console.log(`%c\n👩🏼‍⚕️`, 'font-size: 82px;', 'Starting HR...\n\n')
+  //console.log(event)  //no target
+  scanBtn.textContent='...'  //
+  //await device.gatt.disconnect();  //?
+  const server = await device.gatt.connect(),
+    service = await server.getPrimaryService('heart_rate'),
+    char = await service.getCharacteristic('heart_rate_measurement')
+
+  char.oncharacteristicvaluechanged = props.onChange
+  char.startNotifications()  //await 
+  return char
+}
+
+function scann() {
+//const data = []
+//var hrtime0, hrtime1, hrval, hrb=0  //hravg
+//hr.oncontextmenu=function(){scanBtnn.textContent='∅ '+(hrb/(hrtime0-hrtime1)*1000*60).toFixed(1); return false}  //
+
+connect({
+  onChange: e => {
+    const val = e.target.value.getInt8(1)
+
+    console.clear()
+    console.log(val)  //console.log(`%c\n💚 ${val}`, 'font-size: 24px;')
+    //scanBtnn.textContent=val;
+    //hrmx=Math.max(hrmx,val)  //
+    //if(hrtime0) hrb+=hrval*(Date.now()-hrtime0)/1000/60; else hrtime1=Date.now()
+    //document.querySelector('h4>a').textContent='bpm'; if(hrval && val!=hrval) document.querySelector('h4>a').textContent += val>hrval? '↗':'↘'  //
+    //hrval=val; hrtime0=Date.now()
+    //document.querySelector('h4>a').href+=(Date.now()/1000).toFixed()+';'+val+','  //
+    handlehr(val)  //hrs.push(Date.now()/1000+';'+val);manu()
+  },
+}).catch(e => {console.warn(Error(e)); output.textContent=e.message})  //output.textContent=e.message
+navigator.wakeLock.request('screen')  //
+//document.querySelector('h4>a').href='csvtocanvas.htm?'  //
+output.textContent='Download'  //
+}
+*/
+function scann() {
+navigator.bluetooth.requestDevice({ filters: [{ services: [0xFEE0] }, { services: ['heart_rate'] }] })
+.then(device => device.gatt.connect())
+.then(server => server.getPrimaryService('heart_rate'))
+.then(service => service.getCharacteristic('heart_rate_measurement'))
+.then(characteristic => characteristic.startNotifications())
+.then(characteristic => {
+  characteristic.addEventListener('characteristicvaluechanged',
+                                  handleCharacteristicValueChanged);
+  console.log('Notifications have been started.');
+})
+.catch(error => { console.error(error); });
+
+function handleCharacteristicValueChanged(event) {
+  const value = event.target.value;
+  console.log('Received ' + value);
+  // TODO: Parse Heart Rate Measurement value.
+  // See https://github.com/WebBluetoothCG/demos/blob/gh-pages/heart-rate-sensor/heartRateSensor.js
+  handlehr(value.getInt8(1))
+}
+}
+
+function handlehr(val) {hrs.push(Date.now()/1000+';'+val);manu(); document.querySelector('.h1-right').style.animationDuration=60/val+'s'; if(upluri) upload(val); navigator.setAppBadge(val) }
+if(!navigator.bluetooth) scanBtn.disabled=true  //
+//handlehr(62)  //
+</script>
+<!-- <script src="webapp.bundle.js"></script> -->
+</body>
+</html>
