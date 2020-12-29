@@ -46,21 +46,14 @@ ctx.fillText((apai/60).toFixed()+'♡'+(spai/60).toFixed(),300,8)  //PAI⬡
 }
 
 function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
-/*
-var mutationObserver = new MutationObserver(function() {
- const tmp=output.textContent.match(/.*\n$/)[0]; if(tmp.match(/\d+;/)) {hrs.push(tmp.replace(' ',''));manu();if(upluri) upload(tmp.split(';')[1]);
-  if(tmp.split(';')[1]>hrnoti && hrs[hrs.length-2].split(';')[1]<=hrnoti) document.querySelector('.h1-right').dispatchEvent(event)}
-  document.querySelector('.h1-right').style.animationDuration=60/tmp.split(';')[1]+'s'  //
-});
 
-mutationObserver.observe(output, {childList: true});
-*/
 if(ls=='?kiox') {ls='?1'; navigator.geolocation.watchPosition(function(pos) {scanBtn.innerHTML=Math.round(pos.coords.speed*3.6)+' <sup>km/h</sup>'}, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})}
 var event=new Event('contextmenu');if(ls.slice(1)>=1) {window.setInterval(function(){scanBtn.dispatchEvent(event)}, ls.slice(1)*60000)}  //?1 hr every 1 min
 output.onclick=function(){output.href='data:,'+hrs.join('%0A')}  //+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])
 
 document.querySelector('input').onchange = function() { var reader=new FileReader(); if(this.files[0].name.match(/csv$|gpx$/))
- {reader.onload=function(){cv(reader.result)};reader.readAsText(this.files[0])} else 
+ {reader.onload=function(){cv(reader.result)};reader.readAsText(this.files[0])} else if(this.files[0].name.match(/ogg$|mp3$/))
+ {audio.src=URL.createObjectURL(this.files[0])} else 
  {reader.onload=function(){db(reader.result)};reader.readAsArrayBuffer(this.files[0])} }
 
 function cv(that) {
@@ -85,7 +78,7 @@ scr.onload=function(){
 document.body.appendChild(scr)
 }
 
-if (ls.slice(-4,-3)=='.') window.setInterval(function(){ //document.body.style.all='initial';  //?rate.txt monitor
+if (ls.slice(-4)=='.txt' || ls.slice(-4)=='.csv') window.setInterval(function(){ //document.body.style.all='initial';  //?rate.txt monitor
  fetch(ls.slice(1)).then(function(response) {response.text().then(function(text){
   if(ls.slice(-4)=='.txt') {hrs.push(Date.now()/1000+';'+text);manu()} else cv(text)  //document.body.innerHTML=text
  })})
@@ -118,14 +111,17 @@ function handleCharacteristicValueChanged(event) {
   // See https://github.com/WebBluetoothCG/demos/blob/gh-pages/heart-rate-sensor/heartRateSensor.js
   handlehr(value.getInt8(1))
 }
+audio.play()  //
 }
 
-function handlehr(val) {hrs.push(Date.now()/1000+';'+val);manu(); document.querySelector('.h1-right').style.animationDuration=60/val+'s'; if(upluri) upload(val); navigator.setAppBadge(val)}
+function handlehr(val) {hrs.push(Date.now()/1000+';'+val);manu(); document.querySelector('.h1-right').style.animationDuration=60/val+'s'; if(upluri) upload(val); navigator.setAppBadge(val); audio.playbackRate=val/96}
 if(!navigator.bluetooth) scanBtn.disabled=true  //
 output.oncontextmenu=function(){var file=new File([new Blob([hrs.join('\n')], {type:'text/plain'})], "pulse.csv", {type:'text/plain'}); if (navigator.canShare && navigator.canShare({ files: [file] })) navigator.share({title:'\u2665',files:[file]}); return false}  //
 
 window.onunload = function(){sessionStorage.spai=spai}
 var spai=1*sessionStorage.spai||0
+
+var audio=new Audio(); audio.loop=true; if (ls.slice(-4)=='.ogg' || ls.slice(-4)=='.mp3') audio.src=ls.slice(1)  //?https://raw.githubusercontent.com/nelioyann/HeartRateBasedMusic/master/songs/bensound-summer.mp3
 </script>
 <!-- <script src="webapp.bundle.js"></script> -->
 </body>
