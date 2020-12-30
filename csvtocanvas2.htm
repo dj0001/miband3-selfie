@@ -90,7 +90,7 @@ if(hrs.length) {var X1=hrs[hrs.length-1].split(';'); var dt=Date.now()/1000-X1[0
 hrs.push(Date.now()/1000+';'+stps) }
 */
 
-document.querySelector('#scanBtn').addEventListener('click', scann);
+document.querySelector('#scanBtn').addEventListener('click', function(){scann(); audio.play()});  //scann
 
 function scann() {
 navigator.bluetooth.requestDevice({ filters: [{ services: [0xFEE0] }, { services: ['heart_rate'] }] })
@@ -111,7 +111,6 @@ function handleCharacteristicValueChanged(event) {
   // See https://github.com/WebBluetoothCG/demos/blob/gh-pages/heart-rate-sensor/heartRateSensor.js
   handlehr(value.getInt8(1))
 }
-audio.play()  //
 }
 
 function handlehr(val) {hrs.push(Date.now()/1000+';'+val);manu(); document.querySelector('.h1-right').style.animationDuration=60/val+'s'; if(upluri) upload(val); navigator.setAppBadge(val); audio.playbackRate=val/96; if(val>hrnoti) audio.play()}
