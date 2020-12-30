@@ -114,14 +114,15 @@ function handleCharacteristicValueChanged(event) {
 audio.play()  //
 }
 
-function handlehr(val) {hrs.push(Date.now()/1000+';'+val);manu(); document.querySelector('.h1-right').style.animationDuration=60/val+'s'; if(upluri) upload(val); navigator.setAppBadge(val); audio.playbackRate=val/96}
+function handlehr(val) {hrs.push(Date.now()/1000+';'+val);manu(); document.querySelector('.h1-right').style.animationDuration=60/val+'s'; if(upluri) upload(val); navigator.setAppBadge(val); audio.playbackRate=val/96; if(val>hrnoti) audio.play()}
 if(!navigator.bluetooth) scanBtn.disabled=true  //
 output.oncontextmenu=function(){var file=new File([new Blob([hrs.join('\n')], {type:'text/plain'})], "pulse.csv", {type:'text/plain'}); if (navigator.canShare && navigator.canShare({ files: [file] })) navigator.share({title:'\u2665',files:[file]}); return false}  //
 
 window.onunload = function(){sessionStorage.spai=spai}
 var spai=1*sessionStorage.spai||0
 
-var audio=new Audio(); audio.loop=true; if (ls.slice(-4)=='.ogg' || ls.slice(-4)=='.mp3') audio.src=ls.slice(1)  //?https://raw.githubusercontent.com/nelioyann/HeartRateBasedMusic/master/songs/bensound-summer.mp3
+var audio=new Audio(); if (ls.slice(-4)=='.ogg' || ls.slice(-4)=='.mp3') {audio.loop=true; audio.src=ls.slice(1)}  //?https://raw.githubusercontent.com/nelioyann/HeartRateBasedMusic/master/songs/bensound-summer.mp3
+if(hrnoti<Infinity) audio.src='https://upload.wikimedia.org/wikipedia/commons/0/05/Beep-09.ogg'  //
 </script>
 <!-- <script src="webapp.bundle.js"></script> -->
 </body>
