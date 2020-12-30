@@ -121,7 +121,7 @@ window.onunload = function(){sessionStorage.spai=spai}
 var spai=1*sessionStorage.spai||0
 
 var audio=new Audio(); if (ls.slice(-4)=='.ogg' || ls.slice(-4)=='.mp3') {audio.loop=true; audio.src=ls.slice(1)}  //?https://raw.githubusercontent.com/nelioyann/HeartRateBasedMusic/master/songs/bensound-summer.mp3
-if(hrnoti<Infinity) audio.src='https://upload.wikimedia.org/wikipedia/commons/0/05/Beep-09.ogg'  //
+else if(hrnoti<Infinity) audio.src='https://upload.wikimedia.org/wikipedia/commons/0/05/Beep-09.ogg'  //
 </script>
 <!-- <script src="webapp.bundle.js"></script> -->
 </body>
