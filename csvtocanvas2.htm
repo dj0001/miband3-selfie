@@ -90,7 +90,7 @@ if(hrs.length) {var X1=hrs[hrs.length-1].split(';'); var dt=Date.now()/1000-X1[0
 hrs.push(Date.now()/1000+';'+stps) }
 */
 
-document.querySelector('#scanBtn').addEventListener('click', function(){scann(); audio.play()});  //scann
+document.querySelector('#scanBtn').addEventListener('click', function(){scann(); audio.play(); output.textContent='Download'});  //scann
 
 function scann() {
 navigator.bluetooth.requestDevice({ filters: [{ services: [0xFEE0] }, { services: ['heart_rate'] }] })
