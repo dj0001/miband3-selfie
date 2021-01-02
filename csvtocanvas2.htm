@@ -48,7 +48,7 @@ ctx.fillText((apai/60).toFixed()+'♡'+(spai/60).toFixed(),300,8)  //PAI⬡
 function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);var fd=new FormData();var blob=new Blob([1*y], {type : 'text/plain'});fd.append('file', blob, "rate.txt");xhr.send(fd)}
 
 if(ls=='?kiox') {ls='?1'; navigator.geolocation.watchPosition(function(pos) {scanBtn.innerHTML=Math.round(pos.coords.speed*3.6)+' <sup>km/h</sup>'}, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})}
-var event=new Event('contextmenu');if(ls.slice(1)>=1) {window.setInterval(function(){scanBtn.dispatchEvent(event)}, ls.slice(1)*60000)}  //?1 hr every 1 min
+if(ls.slice(1)>=1) hrnoti=1*ls.slice(1)  //?150
 output.onclick=function(){output.href='data:,'+hrs.join('%0A')}  //+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])
 
 document.querySelector('input').onchange = function() { var reader=new FileReader(); if(this.files[0].name.match(/csv$|gpx$/))
