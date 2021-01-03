@@ -59,7 +59,9 @@ document.querySelector('input').onchange = function() { var reader=new FileReade
 function cv(that) {
  if(that.match('<gpx')) {that=that.replace(/.*?<time>(.*?)<.*?:hr>(.*?)<.*/g, function(m, p1, p2){return new Date(p1).getTime()/1000+';'+p2}).replace(/<.*\n?/g,'')}
  const lines = that.replace(/\r?\n$/,'').split(/\r?\n/);
- hrs=lines; manu()
+ hrs=lines; 
+ if(isNaN(hrs[hrs.length-1].split(/;|\t/)[0])) hrs=hrs.map(x => Date.parse(x.split(/;|\t/)[0])/1000+';'+x.split(/;|\t/)[1])  //
+ manu()
 }
 
 //if(sessionStorage.csv) cv(sessionStorage.csv)  //dbtocsv
