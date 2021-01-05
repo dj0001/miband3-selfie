@@ -51,7 +51,7 @@ function upload(y){var xhr=new XMLHttpRequest();xhr.open("POST", upluri, true);v
 
 if(ls=='?kiox') {ls='?1'; navigator.geolocation.watchPosition(function(pos) {scanBtn.innerHTML=Math.round(pos.coords.speed*3.6)+' <sup>km/h</sup>'}, function(err) {console.warn(err.message)}, {enableHighAccuracy:true, timeout:50000, maximumAge:0})}
 if(ls.slice(1)>=1) hrnoti=1*ls.slice(1)  //?150
-output.onclick=function(){output.href='data:,'+hrs.join('%0A')}  //+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])
+output.onclick=function(){output.href='data:,'+hrs.join('%0A'); output.download='pulse'+new Date().toJSON().slice(0,-5)+'.csv'}  //+encodeURI(this.innerHTML.match(/Finished\.\n([^]*)/)[1])
 
 document.querySelector('input').onchange = function() { var reader=new FileReader(); if(this.files[0].name.match(/csv$|gpx$/))
  {reader.onload=function(){cv(reader.result)};reader.readAsText(this.files[0])} else if(this.files[0].name.match(/ogg$|mp3$/))
